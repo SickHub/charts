@@ -29,9 +29,10 @@ helm search repo drpsychick
 helm upgrade --create-namespace --namespace test --install --values values.yaml jobs drpsychick/cronjobs
 ```
 
-## TODO
+## Missing features - help appreciated
 * [ ] allow overwriting `nodeSelector, affinity, ...`
 * [ ] add charts ci pipeline
+* [ ] add support for scripts via `configMap`
 * [ ] add support for `volumes` + `volumeMounts`
 * [ ] add some specific examples
 
