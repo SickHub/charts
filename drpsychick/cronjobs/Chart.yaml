@@ -1,0 +1,6 @@
+apiVersion: v2
+name: cronjobs
+description: A generic helm cronjob chart for kubernetes
+type: application
+version: 0.0.1
+appVersion: latest

@@ -1,0 +1,10 @@
+{{- $namespace := .Release.Namespace }}
+{{- $fullname := include "cronjobs.fullname" . }}
+
+1. Check if cronjob was installed:
+  kubectl --namespace {{ $namespace }} get cronjob
+
+2. Run it once as a job:
+{{- range .Values.jobs }}
+  kubectl --namespace {{ $namespace }} create job {{ .name }}-test --from=cronjob/{{ $fullname }}-{{ .name }}
+{{- end }}

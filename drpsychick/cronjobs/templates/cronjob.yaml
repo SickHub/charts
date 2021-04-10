@@ -1,0 +1,102 @@
+{{- $chart_name := include "cronjobs.fullname" . }}
+{{- $chart_labels := include "cronjobs.labels" . }}
+{{- $chart_selector_labels := include "cronjobs.selectorLabels" . }}
+{{- $service_account_name := include "cronjobs.serviceAccountName" . }}
+{{- $registry := .Values.image.registry }}
+{{- $tag := .Values.image.tag | default .Chart.AppVersion }}
+{{- $image_pull_secrets := .Values.imagePullSecrets }}
+
+{{- range $job := .Values.jobs }}
+{{- $image := print $registry "/" $.Values.image.repository ":" $tag }}
+{{- if .image }}
+  {{- $image = print (default $registry .image.registry) "/" .image.repository ":" (default $tag .image.tag) }}
+{{- end }}
+{{- $env := $.Values.env }}
+{{- if .env }}
+  {{- $env = concat $env .env }}
+{{- end }}
+{{- $checksum := toYaml . | sha256sum | trunc 20 | quote }}
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ $chart_name }}-{{ .name }}
+  labels:
+    {{- $chart_labels | nindent 4 }}
+  annotations:
+    values/checksum: {{ $checksum }}
+spec:
+  concurrencyPolicy: {{ default "Forbid" .concurrencyPolicy }}
+  failedJobsHistoryLimit: {{ default 1 .failedJobsHistoryLimit }}
+  successfulJobsHistoryLimit: {{ default 1 .successfulJobsHistoryLimit }}
+  schedule: {{ .schedule | quote }}
+  {{- /*
+  startingDeadlineSeconds
+  suspend true/false
+  */}}
+  jobTemplate:
+    metadata:
+    spec:
+      {{- /*
+      activeDeadlineSeconds:
+      backoffLimit: 6
+      completions:
+      parallelism:
+      ttlSecondsAfterFinished:
+      selector: # auto generated, not needed
+        matchLabels:
+          {{- $chart_selector_labels | nindent 10 }}
+      */}}
+      template:
+        metadata:
+          {{- with .podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          labels:
+            {{- $chart_selector_labels | nindent 12 }}
+        spec:
+          restartPolicy: {{ default "OnFailure" .restartPolicy }}
+          imagePullSecrets:
+          {{- with default $image_pull_secrets .imagePullSecrets }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if $.Values.secrets.dockerConfigJson }}
+            - name: {{ $chart_name }}-registry
+          {{- end }}
+          {{- if $.Values.serviceAccount.create }}
+          serviceAccountName: {{ $service_account_name }}
+          {{- end }}
+          securityContext:
+            {{- toYaml $.Values.podSecurityContext | nindent 12 }}
+          containers:
+            - name: {{ .name }}
+              securityContext:
+                {{- toYaml $.Values.securityContext | nindent 16 }}
+              image: {{ $image }}
+              imagePullPolicy: {{ $.Values.image.pullPolicy }}
+              {{- if .command }}
+              command:
+                {{- toYaml .command | nindent 16 }}
+              {{- end }}
+              {{- with .args }}
+              args:
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
+              env:
+                {{- toYaml $env | nindent 16 }}
+              resources:
+                {{- toYaml $.Values.resources | nindent 16 }}
+          {{- with $.Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with $.Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with $.Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}
