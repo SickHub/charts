@@ -12,7 +12,10 @@ imagePullSecrets: []
 secrets: {}
   # will create a kubernetes.io/dockerconfigjson secret
   # and add it to imagePullSecrets
-  #dockerConfigJson:
+  # i.e.
+  # AUTH=$( echo -n "$REGISTRY_USER:$REGISTRY_PASS" | base64 )
+  # DOCKER_CONFIG_JSON=$(echo '{ \"auths\": { \"'${REGISTRY_URL}'\": { \"auth\": \"'$AUTH'\" } } }' | base64 | tr -d \"\n\" )"
+  #dockerConfigJson: $DOCKER_CONFIG_JSON
 
 # environment variables for all jobs
 env: []

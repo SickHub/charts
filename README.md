@@ -10,7 +10,7 @@
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/drpsychick/charts.svg)](https://github.com/drpsychick/charts/pulls)
 [![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/drpsychick/charts.svg)](https://github.com/drpsychick/charts/pulls?q=is%3Apr+is%3Aclosed)
 
-## charts
+## Generic charts, like `cronjobs`
 * requires helm v3
 
 ```shell script
