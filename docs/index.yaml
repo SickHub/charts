@@ -9,7 +9,30 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2021-04-11T00:48:02.783172+02:00"
+    created: "2021-04-11T16:56:59.960583+02:00"
+    description: A generic helm cronjob chart for kubernetes
+    digest: 9cddb23999a9dea0743f036d0d543a4f730a193d33510a2d58a4879d516355c2
+    home: https://github.com/DrPsychick
+    maintainers:
+    - email: drpsychick@drsick.net
+      name: DrPsychick
+      url: https://github.com/DrPsychick
+    name: cronjobs
+    sources:
+    - https://github.com/DrPsychick/charts
+    type: application
+    urls:
+    - https://drpsychick.github.io/charts/cronjobs-0.0.4.tgz
+    version: 0.0.4
+  - annotations:
+      artifacthub.io/links: |
+        - name: Image source
+          url: https://github.com/docker-library/busybox
+        - name: Image DockerHub
+          url: https://hub.docker.com/_/busybox
+    apiVersion: v2
+    appVersion: latest
+    created: "2021-04-11T16:56:59.960263+02:00"
     description: A generic helm cronjob chart for kubernetes
     digest: 15716b2116ed6677472ba2b2c1017a5a5901c52ce9c45139c0e2a740e9bc6e43
     home: https://github.com/DrPsychick
@@ -26,7 +49,7 @@ entries:
     version: 0.0.3
   - apiVersion: v2
     appVersion: latest
-    created: "2021-04-11T00:48:02.781708+02:00"
+    created: "2021-04-11T16:56:59.959826+02:00"
     description: A generic helm cronjob chart for kubernetes
     digest: 91bb4be72bb96f3c507a1508f3e181e6b7af14cad24439d68cdfd79d8c394758
     name: cronjobs
@@ -36,7 +59,7 @@ entries:
     version: 0.0.2
   - apiVersion: v2
     appVersion: latest
-    created: "2021-04-11T00:48:02.780995+02:00"
+    created: "2021-04-11T16:56:59.959418+02:00"
     description: A generic helm cronjob chart for kubernetes
     digest: c735ee2fc39fedacce44ecd086d43a95604d4645cb26311eb763c7cfd5aee047
     name: cronjobs
@@ -44,4 +67,4 @@ entries:
     urls:
     - https://drpsychick.github.io/charts/cronjobs-0.0.1.tgz
     version: 0.0.1
-generated: "2021-04-11T00:48:02.780432+02:00"
+generated: "2021-04-11T16:56:59.958343+02:00"
