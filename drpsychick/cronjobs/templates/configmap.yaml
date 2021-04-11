@@ -17,12 +17,10 @@ data:
   {{- range $name, $value := $map.data }}
   {{ $name }}: |-
     {{- $value | nindent 4 }}
-  {{ end }}
-  # spacer
+  {{- end }}
   {{- range $name, $path := $map.files }}
   {{ $name }}: |-
     {{- $.Files.Get $path | nindent 4}}
-  {{ end }}
-  # spacer
+  {{- end }}
 {{- end }}
 {{- end }}
