@@ -29,10 +29,48 @@ helm search repo drpsychick
 helm upgrade --create-namespace --namespace test --install --values values.yaml jobs drpsychick/cronjobs
 ```
 
+### ConfigMaps and Secrets for scripts and data
+* mounted as `/configMaps/{{ name }}` and `/secrets/{{ name }}` respectively
+
+#### Existing configMap
+Use an existing configMap in your cronjobs, it will be available at `/configMaps/global-configmap/`
+```yaml
+customConfigMap: global-configmap
+```
+
+#### Files from strings
+Hint: you can load larger files from separate `yaml` files.
+
+Example: 
+`helm template example cronjobs --debug --values cronjobs/ci/values-configMaps.yaml,cronjobs/ci/values-config1.yaml`
+
+```yaml
+configMaps:
+  scripts:
+    data:
+      script.sh: |-
+        #!/bin/sh
+        echo "foo"
+```
+
+#### Files from files which are within the chart directory
+```yaml
+configMaps:
+  from-files:
+    files:
+      example.sh: ci/files/example.sh
+
+secrets:
+  ssh-creds:
+    files:
+      id-rsa.pub: ci/files/id-rsa.pub
+```
+
+
 ## Missing features - help appreciated
 * [ ] allow overwriting `nodeSelector, affinity, ...`
 * [ ] add charts ci pipeline
-* [ ] add support for scripts via `configMap`
+* [x] add support for scripts + secrets via `ConfigMap` and `Secret`
 * [ ] add support for `volumes` + `volumeMounts`
 * [ ] add some specific examples
 

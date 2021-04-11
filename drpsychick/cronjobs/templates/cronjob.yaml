@@ -87,6 +87,19 @@ spec:
                 {{- toYaml $env | nindent 16 }}
               resources:
                 {{- toYaml $.Values.resources | nindent 16 }}
+              volumeMounts:
+                {{- if $.Values.customConfigMap }}
+                - mountPath: /configMaps/{{ $.Values.customConfigMap }}
+                  name: {{ $.Values.customConfigMap }}
+                {{- end }}
+                {{- range $name, $map := $.Values.configMaps }}
+                - mountPath: /configMaps/{{ $name }}
+                  name: {{ $name }}
+                {{- end }}
+                {{- range $name, $secret := $.Values.secrets }}
+                - mountPath: /secrets/{{ $name }}
+                  name: {{ $name }}
+                {{- end }}
           {{- with $.Values.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 12 }}
@@ -99,4 +112,23 @@ spec:
           tolerations:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-{{- end }}
+          volumes:
+            # global custom configMap
+            {{- if $.Values.customConfigMap }}
+            - name: {{ $.Values.customConfigMap }}
+              configMap:
+                name: {{ $.Values.customConfigMap }}
+            {{- end }}
+            # global configMaps
+            {{- range $name, $map := $.Values.configMaps }}
+            - name: {{ $name }}
+              configMap:
+                name: {{ print $chart_name "-" $name }}
+            {{- end }}
+            # global secrets
+            {{- range $name, $secret := $.Values.secrets }}
+            - name: {{ $name }}
+              secret:
+                secretName: {{ print $chart_name "-" $name }}
+            {{- end }}
+  {{- end }}

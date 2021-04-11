@@ -1,0 +1,8 @@
+# use extra values files to separate config and scripts
+configMaps:
+  config1:
+    data:
+      test.txt: |-
+        some text
+
+        and some more
