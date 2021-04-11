@@ -61,7 +61,7 @@ spec:
           {{- with default $image_pull_secrets .imagePullSecrets }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if $.Values.secrets.dockerConfigJson }}
+          {{- if $.Values.dockerConfigJson }}
             - name: {{ $chart_name }}-registry
           {{- end }}
           {{- if $.Values.serviceAccount.create }}
@@ -113,19 +113,16 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumes:
-            # global custom configMap
             {{- if $.Values.customConfigMap }}
             - name: {{ $.Values.customConfigMap }}
               configMap:
                 name: {{ $.Values.customConfigMap }}
             {{- end }}
-            # global configMaps
             {{- range $name, $map := $.Values.configMaps }}
             - name: {{ $name }}
               configMap:
                 name: {{ print $chart_name "-" $name }}
             {{- end }}
-            # global secrets
             {{- range $name, $secret := $.Values.secrets }}
             - name: {{ $name }}
               secret:
