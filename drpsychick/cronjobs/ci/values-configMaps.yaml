@@ -1,0 +1,36 @@
+# example values for configMaps
+
+configMaps:
+  # name of the configMap
+  config:
+    data:
+      config.ini: |-
+        # config
+        [global]
+          mykey = value
+  scripts:
+    data:
+      start.sh: |-
+        #!/bin/sh
+        trap 'echo "quitting."' QUIT
+
+        echo "starting..."
+        sleep 5
+    # from files: requires files to be in the chart directory!
+    # it's easier to use separate yaml files
+    # see https://github.com/helm/helm/issues/3276#issuecomment-353066972
+    files:
+      example.sh: ci/files/example.sh
+
+jobs:
+  - name: start
+    schedule: "*/15 * * * *"
+    command:
+      - /bin/sh
+    args:
+      - /configMaps/scripts/start.sh
+    image:
+      repository: alpine
+  - name: cat
+    schedule: "*/5 * * * *"
+    command: ["cat", "/configMaps/config/config.ini"]

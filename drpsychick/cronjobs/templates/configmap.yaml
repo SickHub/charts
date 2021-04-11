@@ -1,0 +1,25 @@
+{{- $chart_name := include "cronjobs.fullname" . }}
+{{- $chart_labels := include "cronjobs.labels" . }}
+
+{{- if .Values.configMaps }}
+{{- range $name, $map := .Values.configMaps }}
+{{- $checksum := toYaml $map | sha256sum | trunc 20 | quote }}
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: {{ $chart_name }}-{{ $name }}
+  labels:
+    {{- $chart_labels | nindent 4 }}
+  annotations:
+    values/checksum: {{ $checksum }}
+data:
+  {{- with $map.data }}
+  {{- toYaml . | nindent 2}}
+  {{- end }}
+  {{- range $name, $path := $map.files }}
+  {{ $name }}: |-
+    {{- $.Files.Get $path | nindent 4}}
+  {{- end }}
+{{- end }}
+{{- end }}

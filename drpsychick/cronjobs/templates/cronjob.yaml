@@ -61,7 +61,7 @@ spec:
           {{- with default $image_pull_secrets .imagePullSecrets }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if $.Values.secrets.dockerConfigJson }}
+          {{- if $.Values.dockerConfigJson }}
             - name: {{ $chart_name }}-registry
           {{- end }}
           {{- if $.Values.serviceAccount.create }}
@@ -87,6 +87,19 @@ spec:
                 {{- toYaml $env | nindent 16 }}
               resources:
                 {{- toYaml $.Values.resources | nindent 16 }}
+              volumeMounts:
+                {{- if $.Values.customConfigMap }}
+                - mountPath: /configMaps/{{ $.Values.customConfigMap }}
+                  name: {{ $.Values.customConfigMap }}
+                {{- end }}
+                {{- range $name, $map := $.Values.configMaps }}
+                - mountPath: /configMaps/{{ $name }}
+                  name: {{ $name }}
+                {{- end }}
+                {{- range $name, $secret := $.Values.secrets }}
+                - mountPath: /secrets/{{ $name }}
+                  name: {{ $name }}
+                {{- end }}
           {{- with $.Values.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 12 }}
@@ -99,4 +112,20 @@ spec:
           tolerations:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-{{- end }}
+          volumes:
+            {{- if $.Values.customConfigMap }}
+            - name: {{ $.Values.customConfigMap }}
+              configMap:
+                name: {{ $.Values.customConfigMap }}
+            {{- end }}
+            {{- range $name, $map := $.Values.configMaps }}
+            - name: {{ $name }}
+              configMap:
+                name: {{ print $chart_name "-" $name }}
+            {{- end }}
+            {{- range $name, $secret := $.Values.secrets }}
+            - name: {{ $name }}
+              secret:
+                secretName: {{ print $chart_name "-" $name }}
+            {{- end }}
+  {{- end }}
