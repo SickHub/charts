@@ -56,6 +56,11 @@ aliases:
             --volume $PWD/kind-config.yaml:/root/.kube/config \
             --volume $PWD:/workdir --workdir /workdir \
             quay.io/helmpack/chart-testing \
+            ls -la
+          docker run --rm --network host --interactive --tty --name chart-test \
+            --volume $PWD/kind-config.yaml:/root/.kube/config \
+            --volume $PWD:/workdir --workdir /workdir \
+            quay.io/helmpack/chart-testing \
             ct install --namespace $NAMESPACE --charts=drpsychick/cronjobs
 jobs:
   lint:
