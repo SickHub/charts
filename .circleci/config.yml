@@ -28,7 +28,7 @@ aliases:
     - run:
         name: Install helm
         command: |
-          apk no-cache add curl
+          apk --no-cache add curl
           curl -L https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz |tar xvz
           chmod +x linux-amd64/helm
           mv linux-amd64/helm /usr/local/bin/helm
