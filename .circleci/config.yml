@@ -21,7 +21,7 @@ aliases:
         command: |
           ls -la $PWD
           docker run --rm --interactive --name chart-test \
-            --workdir /workdir --volume /root/project:/workdir \
+            --volume $PWD:/workdir \
             quay.io/helmpack/chart-testing \
             ls -la . /workdir
           sleep 1
