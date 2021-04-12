@@ -26,6 +26,13 @@ aliases:
           chmod +x linux-amd64/helm
           mv linux-amd64/helm /usr/local/bin/helm
     - run:
+        name: Lint chart
+        command: |
+          docker run --rm --network host --interactive --tty --name chart-test \
+            --volume $PWD:/workdir --workdir /workdir \
+            quay.io/helmpack/chart-testing \
+            ci lint --charts=drspychick/cronjobs
+    - run:
         name: Package chart
         command: |
           helm dep update drpsychick/cronjobs
@@ -52,13 +59,12 @@ aliases:
         name: Install on kind
         command: |
           docker run --rm --network host --interactive --tty --name chart-test \
-            --env KUBECONFIG=/workdir/$KIND_KUBECONFIG \
             --volume $PWD:/workdir --workdir /workdir \
             quay.io/helmpack/chart-testing \
             ls -la
           docker run --rm --network host --interactive --tty --name chart-test \
             --env KUBECONFIG=/workdir/$KIND_KUBECONFIG \
-            --volume $PWD:/workdir --workdir /workdir \
+            --volume $PWD:/workdir:ro --workdir /workdir \
             quay.io/helmpack/chart-testing \
             ct install --namespace $NAMESPACE --charts=drpsychick/cronjobs
 jobs:
