@@ -1,70 +1,72 @@
 version: 2.1
 aliases:
-  - &helm
-    - image: alpine/helm
   - &chart-testing
     - image: quay.io/helmpack/chart-testing
+  - &helm
+    - image: alpine/helm
   - &docker-dind
     - image: docker:dind
-  - &prepare
-    steps:
-      - checkout
-  - &remote-docker
-    steps:
-      - setup_remote_docker:
-          version: 20.10.2
   - &lint
-    steps:
-      - run:
-          name: Lint chart
-          command: |
-            cd drpsychick
-            ct lint --chart-dirs=.
+    - checkout
+    - run:
+        name: Lint chart
+        command: |
+          cd drpsychick
+          ct lint --chart-dirs=.
   - &package
-    steps:
-      - run:
-          name: Package chart
-          command: |
-            cd drpsychick
-            helm dep update cronjobs
-            helm package cronjobs
+    - checkout
+    - run:
+        name: Package chart
+        command: &package-chart |
+          cd drpsychick
+          helm dep update cronjobs
+          helm package cronjobs
   - &deploy
-    steps:
-      - run:
-          name: Install kind
-          command: |
-            curl -sSLo /tmp/kind "https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-linux-amd64"
-            chmod +x /tmp/kind
-            mkdir -p /usr/local/bin
-            mv /tmp/kind /usr/local/bin/kind
-      - run:
-          name: Start kind
-          command: |
-            cat <<'EOF' > kind-config.yaml
-            kind: Cluster
-            apiVersion: kind.x-k8s.io/v1alpha4
-            nodes:
-            - role: control-plane
-            - role: worker
-            EOF
-            kind delete cluster --name "$CLUSTER_NAME" > /dev/null 2>&1 || true
-            kind create cluster --name "$CLUSTER_NAME" --kubeconfig $KUBECONFIG_PATH \
-              --config kind-config.yaml --image "kindest/node:$NODE_K8S_VERSION" --wait $WAIT_FOR_CONTROLPLANE
-      - run:
-          name: Install on kind
-          command: |
-            docker run --rm --network host --interactive --tty --name chart-test \
-              --volume $PWD/kind-config.yaml:/root/.kube/config \
-              --volume $PWD:/workdir --workdir /workdir \
-              quay.io/helmpack/chart-testing \
-              ct install --namespace $NAMESPACE --chart-dirs=drpsychick
+    - checkout
+    - setup_remote_docker:
+        version: 20.10.2
+    - run:
+        name: Install helm
+        command: |
+          curl -L https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz |tar xvz
+          chmod +x linux-amd64/helm
+          mv linux-amd64/helm /usr/local/bin/helm
+    - run:
+        name: Package chart
+        command: *package-chart
+    - run:
+        name: Install kind
+        command: |
+          curl -sSLo /tmp/kind "https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-linux-amd64"
+          chmod +x /tmp/kind
+          mkdir -p /usr/local/bin
+          mv /tmp/kind /usr/local/bin/kind
+    - run:
+        name: Start kind
+        command: |
+          echo "kind: Cluster
+          apiVersion: kind.x-k8s.io/v1alpha4
+          nodes:
+          - role: control-plane
+          - role: worker" > kind-config.yaml
+          kind delete cluster --name "$CLUSTER_NAME" > /dev/null 2>&1 || true
+          kind create cluster --name "$CLUSTER_NAME" --kubeconfig $KUBECONFIG_PATH \
+            --config kind-config.yaml --image "kindest/node:$NODE_K8S_VERSION" --wait $WAIT_FOR_CONTROLPLANE
+    - run:
+        name: Install on kind
+        command: |
+          docker run --rm --network host --interactive --tty --name chart-test \
+            --volume $PWD/kind-config.yaml:/root/.kube/config \
+            --volume $PWD:/workdir --workdir /workdir \
+            quay.io/helmpack/chart-testing \
+            ct install --namespace $NAMESPACE --chart-dirs=drpsychick
 jobs:
   lint:
     docker: *chart-testing
-    <<: [*prepare, *lint]
+    steps: *lint
   package:
     docker: *helm
-    <<: [*prepare, *package]
+    steps: *package
   deploy:
     docker: *docker-dind
     environment:
@@ -74,7 +76,7 @@ jobs:
       WAIT_FOR_CONTROLPLANE: 60s
       KUBECONFIG_PATH: $HOME/test-chart.kubeconfig
       NAMESPACE: default
-    <<: [*prepare, *remote-docker, *deploy]
+    steps: *deploy
 
 workflows:
   version: 2
