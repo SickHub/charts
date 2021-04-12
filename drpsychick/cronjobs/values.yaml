@@ -15,7 +15,7 @@ imagePullSecrets: []
 # i.e.
 # AUTH=$( echo -n "$REGISTRY_USER:$REGISTRY_PASS" | base64 )
 # DOCKER_CONFIG_JSON=$(echo -n '{ "auths": { "${REGISTRY_URL}": { "auth": "${AUTH}" } } }' | base64 | tr -d \"\n\")
-#dockerConfigJson: $DOCKER_CONFIG_JSON
+# dockerConfigJson: $DOCKER_CONFIG_JSON
 
 secrets: {}
 #  # strings and file contents are automatically base64 encoded
