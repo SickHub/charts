@@ -45,7 +45,7 @@ aliases:
           apiVersion: kind.x-k8s.io/v1alpha4
           nodes:
           - role: control-plane
-          - role: worker" > $CIRCLE_WORKING_DIRECTORY/kind-config.yaml
+          - role: worker" > kind-config.yaml
           ls -la
           kind delete cluster --name "$CLUSTER_NAME" --quiet || true
           kind create cluster --name "$CLUSTER_NAME" --kubeconfig $KUBECONFIG_PATH \
