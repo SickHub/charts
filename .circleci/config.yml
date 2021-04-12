@@ -9,7 +9,7 @@ aliases:
   - &prepare
     steps:
       - checkout
-  - &remote-docker:
+  - &remote-docker
     steps:
       - setup_remote_docker:
           version: 20.10.2
