@@ -52,13 +52,13 @@ aliases:
         name: Install on kind
         command: |
           docker run --rm --network host --interactive --tty --name chart-test \
-            --volume $PWD/$KIND_KUBECONFIG:/root/.kube/config \
             --volume $PWD:/workdir --workdir /workdir \
+            --env KUBECONFIG=/workdir/$KIND_KUBECONFIG \
             quay.io/helmpack/chart-testing \
             ls -la
           docker run --rm --network host --interactive --tty --name chart-test \
-            --volume $PWD/$KIND_KUBECONFIG:/root/.kube/config \
             --volume $PWD:/workdir --workdir /workdir \
+            --env KUBECONFIG=/workdir/$KIND_KUBECONFIG \
             quay.io/helmpack/chart-testing \
             ct install --namespace $NAMESPACE --charts=drpsychick/cronjobs
 jobs:
