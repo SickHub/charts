@@ -31,7 +31,7 @@ aliases:
           docker run --rm --network host --interactive --tty --name chart-test \
             --volume $PWD:/workdir --workdir /workdir \
             quay.io/helmpack/chart-testing \
-            ci lint --charts=drspychick/cronjobs
+            ct lint --charts=drspychick/cronjobs
     - run:
         name: Package chart
         command: |
