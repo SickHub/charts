@@ -29,9 +29,9 @@ aliases:
         name: Lint chart
         command: |
           docker run --rm --network host --interactive --tty --name chart-test \
-            --volume $PWD:/workdir \
+            --volume $PWD:/workdir --workdir /workdir \
             quay.io/helmpack/chart-testing \
-            ct lint --charts=/workdir/drspychick/cronjobs
+            ct lint --charts=/workdir/drpsychick/cronjobs
     - run:
         name: Package chart
         command: |
@@ -66,7 +66,7 @@ aliases:
             --env KUBECONFIG=/workdir/$KIND_KUBECONFIG \
             --volume $PWD:/workdir:ro --workdir /workdir \
             quay.io/helmpack/chart-testing \
-            ct install --namespace $NAMESPACE --charts=/workdir/drspychick/cronjobs
+            ct install --namespace $NAMESPACE --charts=/workdir/drpsychick/cronjobs
 jobs:
   lint:
     docker: *chart-testing
