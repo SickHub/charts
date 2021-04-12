@@ -15,13 +15,13 @@ aliases:
   - &deploy
     - checkout
     - setup_remote_docker:
-        version: 20.10.3
+        version: 20.10.2
     - run:
         name: Lint chart
         command: |
           ls -la $PWD
           docker run --rm --interactive --name chart-test \
-            --workdir /workdir --volume $PWD:/workdir \
+            --workdir /workdir --volume /root/project:/workdir \
             quay.io/helmpack/chart-testing \
             ls -la . /workdir
           sleep 1
