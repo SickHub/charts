@@ -17,6 +17,18 @@ aliases:
     - setup_remote_docker:
         version: 20.10.2
     - run:
+        name: Lint chart
+        command: |
+          docker run --rm --interactive --name chart-test \
+            --volume $PWD:/workdir --workdir /workdir \
+            quay.io/helmpack/chart-testing \
+            ls -la . /workdir
+          sleep 1
+          docker run --rm --interactive --name chart-test \
+            --volume $PWD:/workdir --workdir /workdir \
+            quay.io/helmpack/chart-testing \
+            ct lint --charts=drpsychick/cronjobs
+    - run:
         name: Install helm
         command: |
           apk --no-cache add curl
@@ -25,13 +37,6 @@ aliases:
           tar xvzf helm-v${HELM_VERSION}.tgz
           chmod +x linux-amd64/helm
           mv linux-amd64/helm /usr/local/bin/helm
-    - run:
-        name: Lint chart
-        command: |
-          docker run --rm --interactive --name chart-test \
-            --volume $PWD:/workdir --workdir /workdir \
-            quay.io/helmpack/chart-testing \
-            ct lint --charts=drpsychick/cronjobs
     - run:
         name: Package chart
         command: |
