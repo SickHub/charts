@@ -15,17 +15,17 @@ aliases:
   - &deploy
     - checkout
     - setup_remote_docker:
-        version: 20.10.2
+        version: 20.10.5
     - run:
         name: Lint chart
         command: |
           docker run --rm --interactive --name chart-test \
-            --volume $PWD:/workdir --workdir /workdir \
+            --workdir /workdir --volume $PWD:/workdir \
             quay.io/helmpack/chart-testing \
             ls -la . /workdir
           sleep 1
           docker run --rm --interactive --name chart-test \
-            --volume $PWD:/workdir --workdir /workdir \
+            --workdir /workdir --volume $PWD:/workdir \
             quay.io/helmpack/chart-testing \
             ct lint --charts=drpsychick/cronjobs
     - run:
