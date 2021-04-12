@@ -12,6 +12,7 @@ aliases:
           cd drpsychick
           ct lint --chart-dirs=.
   - &package
+    - checkout
     - run:
         name: Package chart
         command: |
