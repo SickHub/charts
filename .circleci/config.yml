@@ -51,6 +51,8 @@ aliases:
     - run:
         name: Install on kind
         command: |
+          pwd
+          ls -la
           docker run --rm --network host --interactive --tty --name chart-test \
             --volume $PWD:/workdir --workdir /workdir \
             --env KUBECONFIG=/workdir/$KIND_KUBECONFIG \
