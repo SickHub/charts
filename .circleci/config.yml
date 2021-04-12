@@ -39,14 +39,11 @@ aliases:
     - run:
         name: Create and start kind cluster
         command: |
-          pwd
-          ls -la
           echo "kind: Cluster
           apiVersion: kind.x-k8s.io/v1alpha4
           nodes:
           - role: control-plane
           - role: worker" > kind-config.yaml
-          ls -la
           kind delete cluster --name "$CLUSTER_NAME" --quiet || true
           kind create cluster --name "$CLUSTER_NAME" --kubeconfig $KUBECONFIG_PATH \
             --config kind-config.yaml --image "kindest/node:$KIND_K8S_VERSION" \
@@ -54,14 +51,18 @@ aliases:
     - run:
         name: Install on kind
         command: |
+          pwd
+          ls -la
+          cd /root/project
+          ls -la
           docker run --rm --network host --interactive --tty --name chart-test \
-            --volume $CIRCLE_WORKING_DIRECTORY/kind-config.yaml:/root/.kube/config \
-            --volume $CIRCLE_WORKING_DIRECTORY:/workdir --workdir /workdir \
+            --volume $KUBECONFIG_PATH:/root/.kube/config \
+            --volume $PWD:/workdir --workdir /workdir \
             quay.io/helmpack/chart-testing \
             ls -la
           docker run --rm --network host --interactive --tty --name chart-test \
-            --volume $CIRCLE_WORKING_DIRECTORY/kind-config.yaml:/root/.kube/config \
-            --volume $CIRCLE_WORKING_DIRECTORY:/workdir --workdir /workdir \
+            --volume $KUBECONFIG_PATH:/root/.kube/config \
+            --volume $PWD:/workdir --workdir /workdir \
             quay.io/helmpack/chart-testing \
             ct install --namespace $NAMESPACE --charts=drpsychick/cronjobs
 jobs:
@@ -75,7 +76,7 @@ jobs:
       KIND_K8S_VERSION: v1.20.2@sha256:8f7ea6e7642c0da54f04a7ee10431549c0257315b3a634f6ef2fecaaedb19bab
       CLUSTER_NAME: test-charts
       WAIT_FOR_CONTROLPLANE: 60s
-      KUBECONFIG_PATH: $HOME/test-chart.kubeconfig
+      KUBECONFIG_PATH: $HOME/test-charts.kubeconfig
       NAMESPACE: default
       HELM_VERSION: 3.5.3
       HELM_CHECKSUM: 2170a1a644a9e0b863f00c17b761ce33d4323da64fc74562a3a6df2abbf6cd70
