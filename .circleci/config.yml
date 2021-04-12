@@ -1,0 +1,35 @@
+version: 2.1
+aliases:
+  - &helm
+    - image: alpine/helm
+  - &chart-testing
+    - image: quay.io/helmpack/chart-testing
+  - &lint
+    - checkout
+    - run:
+        name: Lint chart
+        command: |
+          cd drpsychick
+          ct lint --chart-dirs=.
+  - &package
+    - run:
+        name: Package chart
+        command: |
+          cd drpsychick
+          helm dep update cronjobs
+          helm package cronjobs
+
+jobs:
+  lint:
+    docker: *chart-testing
+    steps: *lint
+  package:
+    docker: *helm
+    steps: *package
+
+workflows:
+  version: 2
+  chart-test:
+    jobs:
+      - lint
+      - package
