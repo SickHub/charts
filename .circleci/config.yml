@@ -29,7 +29,9 @@ aliases:
         name: Install helm
         command: |
           apk --no-cache add curl
-          curl -L https://get.helm.sh/helm-v3.5.3-linux-amd64.tar.gz |tar xvz
+          curl -sSLo helm-v${HELM_VERSION}.tgz "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz"
+          sha256sum helm-v${HELM_VERSION}.tgz |grep "${HELM_CHECKSUM}" || exit 1
+          tar xvzf helm-v${HELM_VERSION}.tgz
           chmod +x linux-amd64/helm
           mv linux-amd64/helm /usr/local/bin/helm
     - run:
@@ -38,10 +40,10 @@ aliases:
     - run:
         name: Install kind
         command: |
-          curl -sSLo /tmp/kind "https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-linux-amd64"
-          chmod +x /tmp/kind
+          curl -sSLo kind-${KIND_VERSION} "https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-linux-amd64"
+          chmod +x kind-${KIND_VERSION}
           mkdir -p /usr/local/bin
-          mv /tmp/kind /usr/local/bin/kind
+          mv kind-${KIND_VERSION} /usr/local/bin/kind
     - run:
         name: Start kind
         command: |
@@ -77,6 +79,8 @@ jobs:
       WAIT_FOR_CONTROLPLANE: 60s
       KUBECONFIG_PATH: $HOME/test-chart.kubeconfig
       NAMESPACE: default
+      HELM_VERSION: 3.5.3
+      HELM_CHECKSUM: 2170a1a644a9e0b863f00c17b761ce33d4323da64fc74562a3a6df2abbf6cd70
     steps: *deploy
 
 workflows:
