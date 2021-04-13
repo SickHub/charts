@@ -25,7 +25,7 @@ aliases:
           curl -sSLo kubectl-${KUBECTL_VERSION} "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
           chmod +x kubectl-${KUBECTL_VERSION}
           mv kubectl-${KUBECTL_VERSION} /usr/local/bin/kubectl
-          mkdir tmp
+          mkdir ct
           curl -sSLo ct/ct-${CT_VERSION}.tgz "https://github.com/helm/chart-testing/releases/download/v${CT_VERSION}/chart-testing_${CT_VERSION}_linux_amd64.tar.gz"
           (cd ct;
           tar -xzf ct-${CT_VERSION}.tgz
@@ -68,7 +68,7 @@ aliases:
         name: Install on kind
         command: |
           export KUBECONFIG=$KIND_KUBECONFIG
-          ct install --namespace $NAMESPACE --chart-dirs=drpsychick
+          ct install --namespace $NAMESPACE --remote origin --chart-dirs=drpsychick
 jobs:
   lint:
     docker: *chart-testing
