@@ -74,13 +74,14 @@ aliases:
           # portforward local port (used in config) to control-plane local port (6443)
           socat "TCP-LISTEN:6443,reuseaddr,fork" \
             EXEC:"'docker exec -i test-charts-control-plane socat STDIO TCP:localhost:6443'" &
-          export KUBECONFIG=$PWD/$KIND_KUBECONFIG
+          echo "export KUBECONFIG=$PWD/$KIND_KUBECONFIG" >> $BASH_ENV && source $BASH_ENV
           kubectl cluster-info --context kind-test-charts
     - run:
         name: Install on kind
         command: |
-          export KUBECONFIG=$PWD/$KIND_KUBECONFIG
+          echo "config: $KUBECONFIG"
           kubectl cluster-info --context kind-test-charts
+          export KUBECONFIG=$PWD/$KIND_KUBECONFIG
           ct install --namespace $NAMESPACE --remote origin --chart-dirs=drpsychick
 jobs:
   lint:
