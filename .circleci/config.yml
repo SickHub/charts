@@ -79,6 +79,8 @@ aliases:
     - run:
         name: Install on kind
         command: |
+          echo "export KUBECONFIG=$PWD/$KIND_KUBECONFIG" >> $BASH_ENV && source $BASH_ENV
+          echo "config: $KUBECONFIG, env: $BASH_ENV"
           kubectl cluster-info --context kind-test-charts
           ct install --namespace $NAMESPACE --remote origin --chart-dirs=drpsychick
 jobs:
