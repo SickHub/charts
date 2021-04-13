@@ -80,7 +80,8 @@ aliases:
         name: Install on kind
         command: |
           echo "export KUBECONFIG=$PWD/$KIND_KUBECONFIG" >> $BASH_ENV && source $BASH_ENV
-          echo "config: $KUBECONFIG, env: $BASH_ENV"
+          socat "TCP-LISTEN:6443,reuseaddr,fork" \
+            EXEC:"'docker exec -i test-charts-control-plane socat STDIO TCP:localhost:6443'" &
           kubectl cluster-info --context kind-test-charts
           ct install --namespace $NAMESPACE --remote origin --chart-dirs=drpsychick
 jobs:
@@ -108,4 +109,6 @@ workflows:
   chart-test:
     jobs:
       - lint
-      - deploy
+      - deploy:
+          requires:
+            - lint
