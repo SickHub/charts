@@ -15,6 +15,8 @@ configMaps:
         trap 'echo "quitting."' QUIT
 
         echo "starting..."
+        echo "config.ini:"
+        cat /configMaps/config/config.ini
         sleep 5
     # from files: requires files to be in the chart directory!
     # it's easier to use separate yaml files
