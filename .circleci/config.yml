@@ -16,7 +16,7 @@ aliases:
     - setup_remote_docker:
         version: 20.10.2
     - run:
-        name: Lint chart
+        name: Install dependencies
         # Hint: docker with --volume does not work with remote-docker, so we install `ct`
         command: |
           apk --no-cache add curl git py3-pip
@@ -31,8 +31,8 @@ aliases:
           tar -xzf ct-${CT_VERSION}.tgz
           chmod +x ct
           mv -v ct /usr/local/bin/ct
-          mkdir -p /etc/ct && mv -v etc/* /etc/ct/)
-          ct lint --remote origin --chart-dirs=drpsychick
+          mkdir -p /etc/ct && mv -v etc/* /etc/ct/
+          )
     - run:
         name: Install helm
         command: |
@@ -41,6 +41,10 @@ aliases:
           tar xvzf helm-v${HELM_VERSION}.tgz
           chmod +x linux-amd64/helm
           mv linux-amd64/helm /usr/local/bin/helm
+    - run:
+        name: Lint chart
+        command: |
+          ct lint --remote origin --chart-dirs=drpsychick
     - run:
         name: Package chart
         command: |
