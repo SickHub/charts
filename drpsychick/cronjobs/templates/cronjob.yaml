@@ -6,7 +6,7 @@
 {{- $tag := .Values.image.tag | default .Chart.AppVersion }}
 {{- $image_pull_secrets := .Values.imagePullSecrets }}
 
-{{- range $job := .Values.jobs }}
+{{- range $name, $job := .Values.jobs }}
 {{- $image := print $registry "/" $.Values.image.repository ":" $tag }}
 {{- if .image }}
   {{- $image = print (default $registry .image.registry) "/" .image.repository ":" (default $tag .image.tag) }}
@@ -20,7 +20,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: {{ $chart_name }}-{{ .name }}
+  name: {{ $chart_name }}-{{ $name }}
   labels:
     {{- $chart_labels | nindent 4 }}
   annotations:
@@ -70,7 +70,7 @@ spec:
           securityContext:
             {{- toYaml $.Values.podSecurityContext | nindent 12 }}
           containers:
-            - name: {{ .name }}
+            - name: {{ $name }}
               securityContext:
                 {{- toYaml $.Values.securityContext | nindent 16 }}
               image: {{ $image }}

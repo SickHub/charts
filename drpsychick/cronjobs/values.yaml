@@ -53,8 +53,8 @@ configMaps: {}
 # environment variables for all jobs
 env: []
 
-jobs: []
-#  - name: test
+jobs: {}
+#  test:
 #    schedule: "*/5 * * * *"
 #    command:
 #      - /bin/sh

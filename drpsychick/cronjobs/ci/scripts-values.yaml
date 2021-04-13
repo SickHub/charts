@@ -25,7 +25,7 @@ configMaps:
       example.sh: ci/files/example.sh
 
 jobs:
-  - name: start
+  start:
     schedule: "*/15 * * * *"
     command:
       - /bin/sh
@@ -33,6 +33,6 @@ jobs:
       - /configMaps/scripts/start.sh
     image:
       repository: alpine
-  - name: cat
+  cat:
     schedule: "*/5 * * * *"
     command: ["cat", "/configMaps/config/config.ini"]
