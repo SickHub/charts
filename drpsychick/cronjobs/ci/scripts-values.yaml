@@ -15,6 +15,8 @@ configMaps:
         trap 'echo "quitting."' QUIT
 
         echo "starting..."
+        echo "config.ini:"
+        cat /configMaps/config/config.ini
         sleep 5
     # from files: requires files to be in the chart directory!
     # it's easier to use separate yaml files
@@ -23,7 +25,7 @@ configMaps:
       example.sh: ci/files/example.sh
 
 jobs:
-  - name: start
+  start:
     schedule: "*/15 * * * *"
     command:
       - /bin/sh
@@ -31,6 +33,6 @@ jobs:
       - /configMaps/scripts/start.sh
     image:
       repository: alpine
-  - name: cat
+  cat:
     schedule: "*/5 * * * *"
     command: ["cat", "/configMaps/config/config.ini"]

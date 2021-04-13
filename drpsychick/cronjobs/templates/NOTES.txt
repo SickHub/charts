@@ -5,6 +5,6 @@
   kubectl --namespace {{ $namespace }} get cronjob
 
 2. Run it once as a job:
-{{- range .Values.jobs }}
-  kubectl --namespace {{ $namespace }} create job {{ .name }}-test --from=cronjob/{{ $fullname }}-{{ .name }}
+{{- range $name, $job := .Values.jobs }}
+  kubectl --namespace {{ $namespace }} create job {{ $name }}-test --from=cronjob/{{ $fullname }}-{{ $name }}
 {{- end }}

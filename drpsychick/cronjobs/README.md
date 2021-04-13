@@ -1,22 +1,27 @@
 ## Cronjobs
 
 ### Setup multiple simple cronjobs
-* You can use your own images, e.g. simple small task based images
-* You can run simple shell commands out-of-the-box
+* You can use your own images, e.g. simple, small, task based images
+* You can run simple shell commands out-of-the-box with `command` and `args`
+* You can include small scripts through `configMap`s and run them on a generic image
 
 `values.yaml`:
 ```yaml
 jobs:
-  - name: job1
+  job1:
     schedule: "*/5 * * * *"
+    command: ["/bin/sh"]
     args:
-      - "echo 'Job1'; sleep 5"
-  - name: curl-30-min
+      - "/configMaps/scripts/script.sh"
+  curl-30-min:
     schedule: "*/30 * * * *"
     image:
       registry: docker.io
       repository: alpine
       tag: 3.13
+    command:
+      - "/bin/sh"
+      - "-c"
     args:
       - "apk add --no-cache curl; curl -I https://google.com"
 ```
@@ -42,7 +47,7 @@ customConfigMap: global-configmap
 Hint: you can load larger files from separate `yaml` files.
 
 Example: 
-`helm template example cronjobs --debug --values cronjobs/ci/values-configMaps.yaml,cronjobs/ci/values-config1.yaml`
+`helm template example cronjobs --debug --values cronjobs/ci/scripts-values.yaml,cronjobs/ci/config-test.yaml`
 
 ```yaml
 configMaps:
@@ -50,7 +55,8 @@ configMaps:
     data:
       script.sh: |-
         #!/bin/sh
-        echo "foo"
+        echo "I am started in Job1"
+        sleep 5
 ```
 
 #### Files from files which are within the chart directory
@@ -68,8 +74,8 @@ secrets:
 
 
 ## Missing features - help appreciated
-* [ ] allow overwriting `nodeSelector, affinity, ...`
-* [ ] add charts ci pipeline
+* [ ] allow overwriting `nodeSelector, affinity, resources, ...`
+* [x] add charts ci pipeline
 * [x] add support for scripts + secrets via `ConfigMap` and `Secret`
 * [ ] add support for `volumes` + `volumeMounts`
 * [ ] add some specific examples

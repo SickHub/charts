@@ -2,10 +2,10 @@ apiVersion: v2
 name: cronjobs
 description: A generic helm cronjob chart for kubernetes
 type: application
-version: 0.0.5
+version: 0.0.6
 appVersion: latest
 home: https://github.com/DrPsychick
-keyworks:
+keywords:
   - cronjob
 sources:
   - https://github.com/DrPsychick/charts
