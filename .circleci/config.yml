@@ -28,9 +28,10 @@ aliases:
           mkdir tmp
           curl -sSLo tmp/ct-${CT_VERSION}.tgz "https://github.com/helm/chart-testing/releases/download/v${CT_VERSION}/chart-testing_${CT_VERSION}_linux_amd64.tar.gz"
           (cd tmp;
-          tar -xvzf ct-${CT_VERSION}.tgz
+          tar -xzf ct-${CT_VERSION}.tgz
           chmod +x ct
           mv -v ct /usr/local/bin/ct
+          mkdir -p /usr/local/etc/
           mv -v etc/* /usr/local/etc/
           cd .. && rm -rf tmp/)
           ct lint --charts=drpsychick/cronjobs
@@ -68,15 +69,8 @@ aliases:
     - run:
         name: Install on kind
         command: |
-          docker run --rm --network host --interactive --name chart-test \
-            --volume $PWD:/workdir --workdir /workdir \
-            quay.io/helmpack/chart-testing \
-            ls -la . /workdir
-          docker run --rm --network host --interactive --name chart-test \
-            --env KUBECONFIG=/workdir/$KIND_KUBECONFIG \
-            --volume $PWD:/workdir --workdir /workdir \
-            quay.io/helmpack/chart-testing \
-            ct install --namespace $NAMESPACE --charts=/workdir/drpsychick/cronjobs
+          export KUBECONFIG=$KIND_KUBECONFIG
+          ct install --namespace $NAMESPACE --charts=drpsychick/cronjobs
 jobs:
   lint:
     docker: *chart-testing
