@@ -1,4 +1,5 @@
 [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/drpsychick)](https://artifacthub.io/packages/search?repo=drpsychick)
+[![CircleCI](https://img.shields.io/circleci/build/github/DrPsychick/charts)](https://app.circleci.com/pipelines/github/DrPsychick/charts)
 [![license](https://img.shields.io/github/license/drpsychick/charts.svg)](https://github.com/drpsychick/charts/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/drpsychick/charts.svg)](https://github.com/drpsychick/charts)
 [![Contributors](https://img.shields.io/github/contributors/drpsychick/charts.svg)](https://github.com/drpsychick/charts/graphs/contributors)
