@@ -26,15 +26,13 @@ aliases:
           chmod +x kubectl-${KUBECTL_VERSION}
           mv kubectl-${KUBECTL_VERSION} /usr/local/bin/kubectl
           mkdir tmp
-          curl -sSLo tmp/ct-${CT_VERSION}.tgz "https://github.com/helm/chart-testing/releases/download/v${CT_VERSION}/chart-testing_${CT_VERSION}_linux_amd64.tar.gz"
-          (cd tmp;
+          curl -sSLo ct/ct-${CT_VERSION}.tgz "https://github.com/helm/chart-testing/releases/download/v${CT_VERSION}/chart-testing_${CT_VERSION}_linux_amd64.tar.gz"
+          (cd ct;
           tar -xzf ct-${CT_VERSION}.tgz
           chmod +x ct
           mv -v ct /usr/local/bin/ct
-          mkdir -p /usr/local/etc/
-          mv -v etc/* /usr/local/etc/
-          cd .. && rm -rf tmp/)
-          ct lint --charts=drpsychick/cronjobs
+          mkdir -p /etc/ct && mv -v etc/* /etc/ct/)
+          ct lint --remote origin --chart-dirs=drpsychick
     - run:
         name: Install helm
         command: |
@@ -70,7 +68,7 @@ aliases:
         name: Install on kind
         command: |
           export KUBECONFIG=$KIND_KUBECONFIG
-          ct install --namespace $NAMESPACE --charts=drpsychick/cronjobs
+          ct install --namespace $NAMESPACE --chart-dirs=drpsychick
 jobs:
   lint:
     docker: *chart-testing
