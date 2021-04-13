@@ -79,9 +79,6 @@ aliases:
     - run:
         name: Install on kind
         command: |
-          export -n
-          echo "config: $KUBECONFIG"
-          echo "export KUBECONFIG=$PWD/$KIND_KUBECONFIG" >> $BASH_ENV && source $BASH_ENV
           kubectl cluster-info --context kind-test-charts
           ct install --namespace $NAMESPACE --remote origin --chart-dirs=drpsychick
 jobs:
@@ -91,6 +88,7 @@ jobs:
   deploy:
     docker: *docker-dind
     environment:
+      BASH_ENV: /etc/profile
       KIND_VERSION: v0.10.0
       KIND_K8S_VERSION: v1.20.2@sha256:8f7ea6e7642c0da54f04a7ee10431549c0257315b3a634f6ef2fecaaedb19bab
       KIND_KUBECONFIG: test-charts.kubeconfig
