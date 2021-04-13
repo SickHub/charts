@@ -9,7 +9,32 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2021-04-11T18:26:05.622449+02:00"
+    created: "2021-04-13T21:46:42.671751+02:00"
+    description: A generic helm cronjob chart for kubernetes
+    digest: 2e587bc0986c4dedd123c27d2f1d30bf6412fa72da9c2558f252d04b95dd079c
+    home: https://github.com/DrPsychick
+    keywords:
+    - cronjob
+    maintainers:
+    - email: drpsychick@drsick.net
+      name: DrPsychick
+      url: https://github.com/DrPsychick
+    name: cronjobs
+    sources:
+    - https://github.com/DrPsychick/charts
+    type: application
+    urls:
+    - https://drpsychick.github.io/charts/cronjobs-0.0.6.tgz
+    version: 0.0.6
+  - annotations:
+      artifacthub.io/links: |
+        - name: Image source
+          url: https://github.com/docker-library/busybox
+        - name: Image DockerHub
+          url: https://hub.docker.com/_/busybox
+    apiVersion: v2
+    appVersion: latest
+    created: "2021-04-13T21:46:42.670898+02:00"
     description: A generic helm cronjob chart for kubernetes
     digest: 710bbe5a76de29943bd9826b48b1beeb1c3b13b2f89a81b23770b160eea4adf6
     home: https://github.com/DrPsychick
@@ -32,7 +57,7 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2021-04-11T18:26:05.622153+02:00"
+    created: "2021-04-13T21:46:42.669247+02:00"
     description: A generic helm cronjob chart for kubernetes
     digest: 9cddb23999a9dea0743f036d0d543a4f730a193d33510a2d58a4879d516355c2
     home: https://github.com/DrPsychick
@@ -55,7 +80,7 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2021-04-11T18:26:05.621642+02:00"
+    created: "2021-04-13T21:46:42.666566+02:00"
     description: A generic helm cronjob chart for kubernetes
     digest: 15716b2116ed6677472ba2b2c1017a5a5901c52ce9c45139c0e2a740e9bc6e43
     home: https://github.com/DrPsychick
@@ -72,7 +97,7 @@ entries:
     version: 0.0.3
   - apiVersion: v2
     appVersion: latest
-    created: "2021-04-11T18:26:05.621141+02:00"
+    created: "2021-04-13T21:46:42.663962+02:00"
     description: A generic helm cronjob chart for kubernetes
     digest: 91bb4be72bb96f3c507a1508f3e181e6b7af14cad24439d68cdfd79d8c394758
     name: cronjobs
@@ -82,7 +107,7 @@ entries:
     version: 0.0.2
   - apiVersion: v2
     appVersion: latest
-    created: "2021-04-11T18:26:05.62003+02:00"
+    created: "2021-04-13T21:46:42.662868+02:00"
     description: A generic helm cronjob chart for kubernetes
     digest: c735ee2fc39fedacce44ecd086d43a95604d4645cb26311eb763c7cfd5aee047
     name: cronjobs
@@ -90,4 +115,4 @@ entries:
     urls:
     - https://drpsychick.github.io/charts/cronjobs-0.0.1.tgz
     version: 0.0.1
-generated: "2021-04-11T18:26:05.619465+02:00"
+generated: "2021-04-13T21:46:42.658917+02:00"
