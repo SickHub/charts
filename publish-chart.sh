@@ -17,7 +17,7 @@ git pull
 git rebase master
 git push
 
-for c in cronjobs; do
+for c in cronjobs nginx-phpfpm; do
   [ -z "$(git status -s ./drpsychick/$c/Chart.yaml)" -a -z "$UPDATE" ] && bumpChartVersion $c
   (cd drpsychick; helm package $c)
   mv ./drpsychick/$c-*.tgz ./docs/
