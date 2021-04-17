@@ -86,6 +86,7 @@ aliases:
             EXEC:"'docker exec -i test-charts-control-plane socat STDIO TCP:localhost:6443'" &
           kubectl cluster-info --context kind-test-charts
           ct install --namespace $NAMESPACE --remote origin --chart-dirs=drpsychick
+          kind delete cluster --name "$CLUSTER_NAME" --quiet || true
 jobs:
   lint:
     docker: *chart-testing
