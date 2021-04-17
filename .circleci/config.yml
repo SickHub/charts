@@ -10,7 +10,7 @@ aliases:
     - run:
         name: Lint charts
         command: |
-          ct lint --chart-dirs=${CHARTS_DIR} --check-version-increment=false --all
+          ct lint --chart-dirs=${CHARTS_DIR} --all
   - &deploy
     - checkout
     - setup_remote_docker:
@@ -45,7 +45,7 @@ aliases:
     - run:
         name: Lint charts
         command: |
-          ct lint --remote origin --chart-dirs=${CHARTS_DIR} --check-version-increment=false --all
+          ct lint --remote origin --chart-dirs=${CHARTS_DIR} --all
     - run:
         name: Package charts
         command: |
@@ -90,6 +90,8 @@ aliases:
 jobs:
   lint:
     docker: *chart-testing
+    environment:
+      CHARTS_DIR: drpsychick
     steps: *lint
   deploy:
     docker: *docker-dind
