@@ -1,5 +1,19 @@
-## Cronjobs
+## cronjobs Helm Chart
+A chart that lets you setup one or multiple jobs with ease.
 
+Components:
+* Per job, one `busybox` (or your image) pod that runs at scheduled times
+* Optional `configMap`s that contain your scripts
+
+## Deploy cronjobs
+```shell
+helm repo add drpsychick https://drpsychick.github.io/charts
+helm repo update
+helm search repo drpsychick
+helm upgrade --create-namespace --namespace test --install --values values.yaml my-jobs drpsychick/cronjobs
+```
+
+## Setup
 ### Setup multiple simple cronjobs
 * You can use your own images, e.g. simple, small, task based images
 * You can run simple shell commands out-of-the-box with `command` and `args`
@@ -24,14 +38,6 @@ jobs:
       - "-c"
     args:
       - "apk add --no-cache curl; curl -I https://google.com"
-```
-
-### Deploy cronjobs
-```shell
-helm repo add drpsychick https://drpsychick.github.io/charts
-helm repo update
-helm search repo drpsychick
-helm upgrade --create-namespace --namespace test --install --values values.yaml jobs drpsychick/cronjobs
 ```
 
 ### ConfigMaps and Secrets for scripts and data
@@ -60,6 +66,7 @@ configMaps:
 ```
 
 #### Files from files which are within the chart directory
+Helm can access files, but only when they are within the chart directory, see https://helm.sh/docs/chart_template_guide/accessing_files/
 ```yaml
 configMaps:
   from-files:
@@ -75,7 +82,6 @@ secrets:
 
 ## Missing features - help appreciated
 * [ ] allow overwriting `nodeSelector, affinity, resources, ...`
-* [x] add charts ci pipeline
 * [x] add support for scripts + secrets via `ConfigMap` and `Secret`
 * [ ] add support for `volumes` + `volumeMounts`
 * [ ] add some specific examples

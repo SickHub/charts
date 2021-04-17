@@ -7,14 +7,15 @@ Components
 
 Both are independently scalable, the `nginx` pod forwards PHP traffic to the `phpfpm` pods through a service.
 
-## Install
+## Deploy nginx-phpfpm
 ```shell
 helm repo add drpsychick https://drpsychick.github.io/charts
+helm repo update
 helm search repo drpsychick
-helm install my-release drpsychick/nginx-phpfpm
+helm upgrade --create-namespace --namespace test --install --values values.yaml my-release drpsychick/nginx-phpfpm
 ```
 
-## Configuration
+## Setup
 For general guidance, see [values.yaml](values.yaml)
 
 ### Nginx
@@ -93,6 +94,16 @@ you can use `persistence.enabled = true` to
 * A) let the chart create a PVC for you, bound to a volume named after the chart
 * B) provide an `existingVolume` to use with a PVC created by the chart 
 * C) provide an `existingClaim` to use an existing PVC
+
+## Missing features - help appreciated
+* [ ] provide `nginx.conf` through `values.yaml` -> make it configurable
+* [ ] test scenarios and/or examples
+  * [ ] test autoscaling
+  * [ ] test persistence
+
+## Contribute
+* Create issues: Be specific. What do you expect? How do you suggest we get there?
+* Create pull requests: Don't ask, just create a PR. Small improvements at a time please.
 
 ## Credits
 * Icon from [https://www.freepik.com](Freepik) found on [https://www.flaticon.com/](www.flaticon.com)
