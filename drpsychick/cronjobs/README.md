@@ -92,4 +92,4 @@ secrets:
 * See [Contributing](../../CONTRIBUTING.md) 
 
 ## Credits
-* Cronjobs Icon from  [https://www.flaticon.com/de/autoren/those-icons](Those Icons) found on  [https://www.flaticon.com/de/](www.flaticon.com)
+* Cronjobs icon from  [Those Icons](https://www.flaticon.com/de/autoren/those-icons) found on  [FlatIcon](https://www.flaticon.com/)

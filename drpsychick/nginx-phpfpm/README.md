@@ -123,4 +123,4 @@ you can use `persistence.enabled = true` to
 * See [Contributing](../../CONTRIBUTING.md) 
 
 ## Credits
-* Icon from [https://www.freepik.com](Freepik) found on [https://www.flaticon.com/](www.flaticon.com)
+* Icon from [Freepik](https://www.freepik.com) found on [FlatIcon](https://www.flaticon.com/)
