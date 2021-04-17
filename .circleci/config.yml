@@ -93,6 +93,7 @@ jobs:
   deploy:
     docker: *docker-dind
     environment:
+      CHECK_VERSION_INCREMENT: FALSE
       BASH_ENV: /etc/profile
       KIND_VERSION: v0.10.0
       KIND_K8S_VERSION: v1.20.2@sha256:8f7ea6e7642c0da54f04a7ee10431549c0257315b3a634f6ef2fecaaedb19bab
