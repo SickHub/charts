@@ -120,6 +120,7 @@ you can use `persistence.enabled = true` to
 ## Contribute
 * Create issues: Be specific. What do you expect? How do you suggest we get there?
 * Create pull requests: Don't ask, just create a PR. Small improvements at a time please.
+* See [Contributing](../../CONTRIBUTING.md) 
 
 ## Credits
 * Icon from [https://www.freepik.com](Freepik) found on [https://www.flaticon.com/](www.flaticon.com)

@@ -89,6 +89,7 @@ secrets:
 ## Contribute
 * Create issues: Be specific. What do you expect? How do you suggest we get there?
 * Create pull requests: Don't ask, just create a PR. Small improvements at a time please.
+* See [Contributing](../../CONTRIBUTING.md) 
 
 ## Credits
 * Cronjobs Icon from  [https://www.flaticon.com/de/autoren/those-icons](Those Icons) found on  [https://www.flaticon.com/de/](www.flaticon.com)

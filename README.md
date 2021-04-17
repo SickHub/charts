@@ -20,3 +20,7 @@ helm search repo drpsychick
 ```
 
 On Artifact Hub: https://artifacthub.io/packages/search?repo=drpsychick
+
+## Contribute
+* Create issues, create PRs, ... let's make this better together.
+* See [Contributing](CONTRIBUTING.md)
