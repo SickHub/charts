@@ -1,0 +1,10 @@
+# values for a simple one-pager?
+
+configMaps:
+  scripts:
+    path: /
+    data:
+      info.php: |
+        <?php phpinfo(); ?>
+      ok.php: |
+        <?php print("OK"); ?>
