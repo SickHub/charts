@@ -18,6 +18,22 @@ helm upgrade --create-namespace --namespace test --install --values values.yaml 
 ## Setup
 For general guidance, see [values.yaml](values.yaml)
 
+### Use `ingress` with `cert-manager`
+Enable ingress, add `tls-acme` annotation and `hosts`/`tls` configuration
+```yaml
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: service.example.com
+      paths: ["/"]
+  tls:
+    - secretName: service-tls
+      hosts: ["service.example.com"]
+```
+
 ### Nginx
 * uses `/health.php` as an health endpoint by default (e.g. expects that to exist on the `phpfpm` image)
   * the path `/health.php` is only accessible from within the cluster.
