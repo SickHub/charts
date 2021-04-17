@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "nginx-phpfpm.fullname" . }}-nginx:{{ .Values.nginx.service.port }}']
+      args: ['{{ include "nginx-phpfpm.fullname" . }}-nginx:{{ .Values.nginx.service.port }}/health.php']
   restartPolicy: Never

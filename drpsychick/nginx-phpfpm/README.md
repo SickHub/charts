@@ -93,3 +93,6 @@ you can use `persistence.enabled = true` to
 * A) let the chart create a PVC for you, bound to a volume named after the chart
 * B) provide an `existingVolume` to use with a PVC created by the chart 
 * C) provide an `existingClaim` to use an existing PVC
+
+## Credits
+* Icon from [https://www.freepik.com](Freepik) found on [https://www.flaticon.com/](www.flaticon.com)

@@ -26,7 +26,7 @@ jobs:
       - "apk add --no-cache curl; curl -I https://google.com"
 ```
 
-### Deploy jobs
+### Deploy cronjobs
 ```shell
 helm repo add drpsychick https://drpsychick.github.io/charts
 helm repo update
@@ -83,3 +83,6 @@ secrets:
 ## Contribute
 * Create issues: Be specific. What do you expect? How do you suggest we get there?
 * Create pull requests: Don't ask, just create a PR. Small improvements at a time please.
+
+## Credits
+* Cronjobs Icon from  [https://www.flaticon.com/de/autoren/those-icons](Those Icons) found on  [https://www.flaticon.com/de/](www.flaticon.com)
