@@ -45,7 +45,7 @@ aliases:
     - run:
         name: Lint charts
         command: |
-          ct lint --remote origin --chart-dirs=drpsychick
+          ct lint --remote origin --chart-dirs=drpsychick --check-version-increment=false
     - run:
         name: Package charts
         command: |
