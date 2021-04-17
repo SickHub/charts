@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "nginx-phpfpm.fullname" . }}-phpfpm
+  labels:
+    {{- include "nginx-phpfpm.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.phpfpm.service.type }}
+  ports:
+    - port: {{ .Values.phpfpm.service.port }}
+      targetPort: phpfpm
+      protocol: TCP
+      name: phpfpm
+  selector:
+    {{- include "nginx-phpfpm.selectorLabels" . | nindent 4 }}

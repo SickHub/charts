@@ -1,0 +1,31 @@
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "nginx-phpfpm.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "nginx-phpfpm.labels" . | nindent 4 }}
+  annotations:
+    {{- with .Values.persistence.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    checksum/values: {{ toYaml .Values | sha256sum | trunc 20 | quote }}
+spec:
+  accessModes:
+  {{- range .Values.persistence.accessModes }}
+  - {{ . | quote }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size | quote }}
+  storageClassName: {{ .Values.persistence.storageClass | quote }}
+  {{- if .Values.persistence.volumeMode }}
+  volumeMode: {{ .Values.persistence.volumeMode }}
+  {{- end }}
+  {{- if .Values.persistence.existingVolume }}
+  volumeName: {{ .Values.persistence.existingVolume | quote }}
+  {{- else }}
+  volumeName: {{ template "nginx-phpfpm.fullname" . }}
+  {{- end }}
+{{- end }}

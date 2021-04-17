@@ -1,5 +1,5 @@
-{{- $chart_name := include "cronjobs.fullname" . }}
-{{- $chart_labels := include "cronjobs.labels" . }}
+{{- $chart_name := include "nginx-phpfpm.fullname" . }}
+{{- $chart_labels := include "nginx-phpfpm.labels" . }}
 
 {{- if .Values.configMaps }}
 {{- range $name, $map := .Values.configMaps }}

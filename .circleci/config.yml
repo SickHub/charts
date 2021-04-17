@@ -8,9 +8,9 @@ aliases:
   - &lint
     - checkout
     - run:
-        name: Lint chart
+        name: Lint charts
         command: |
-          ct lint --charts=drpsychick/cronjobs
+          ct lint --chart-dirs=drpsychick
   - &deploy
     - checkout
     - setup_remote_docker:
@@ -43,14 +43,16 @@ aliases:
           chmod +x linux-amd64/helm
           mv linux-amd64/helm /usr/local/bin/helm
     - run:
-        name: Lint chart
+        name: Lint charts
         command: |
           ct lint --remote origin --chart-dirs=drpsychick
     - run:
-        name: Package chart
+        name: Package charts
         command: |
-          helm dep update drpsychick/cronjobs
-          helm package drpsychick/cronjobs
+          for chart in $(ls -1d drpsychick/*); do
+            helm dep update $chart
+            helm package $chart
+          done
     - run:
         name: Install kind
         command: |

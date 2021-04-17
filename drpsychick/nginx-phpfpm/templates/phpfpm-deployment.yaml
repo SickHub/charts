@@ -1,0 +1,97 @@
+{{- $chart_name := include "nginx-phpfpm.fullname" . }}
+{{- $registry := "" }}
+{{- if .Values.phpfpm.image.registry }}
+{{- $registry = print .Values.phpfpm.image.registry "/" }}
+{{- end }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $chart_name }}-phpfpm
+  labels:
+    {{- include "nginx-phpfpm.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.phpfpm.autoscaling.enabled }}
+  replicas: {{ .Values.phpfpm.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "nginx-phpfpm.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "nginx-phpfpm.selectorLabels" . | nindent 8 }}
+        checksum/values: {{ toYaml .Values | sha256sum | trunc 20 | quote }}
+    spec:
+      {{- with .Values.phpfpm.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "nginx-phpfpm.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ $registry }}{{ .Values.phpfpm.image.repository }}:{{ .Values.phpfpm.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.phpfpm.image.pullPolicy }}
+          env:
+          {{- with .Values.phpfpm.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: phpfpm
+              containerPort: 9000
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: phpfpm
+          readinessProbe:
+            tcpSocket:
+              port: phpfpm
+          resources:
+            {{- toYaml .Values.phpfpm.resources | nindent 12 }}
+          volumeMounts:
+            {{- range $name, $map := .Values.configMaps }}
+            - name: {{ $name }}
+              mountPath: {{ print $.Values.phpfpm.docRoot $map.path }}
+            {{- end }}
+            {{- if .Values.persistence.enabled }}
+            - name: root
+              mountPath: {{ .Values.phpfpm.docRoot }}
+            {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        {{- range $name, $map := .Values.configMaps }}
+        - name: {{ $name }}
+          configMap:
+            name: {{ print $chart_name "-" $name }}
+        {{- end }}
+        {{- if .Values.persistence.enabled }}
+        - name: root
+          {{- if .Values.persistence.existingClaim }}
+          persistentVolumeClaim:
+            claimName: {{ printf "%s" (tpl .Values.persistence.existingClaim .) }}
+          {{- else }}
+          persistentVolumeClaim:
+            claimName: {{ $chart_name }}
+          {{- end }}
+        {{- end }}
+        {{- if $.Values.extraVolumes }}
+        {{- toYaml $.Values.extraVolumes | nindent 8 }}
+        {{- end }}

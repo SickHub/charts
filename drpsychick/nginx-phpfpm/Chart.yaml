@@ -1,0 +1,23 @@
+apiVersion: v2
+name: nginx-phpfpm
+description: A chart for an nginx pod with multiple phpfpm pods
+type: application
+version: 0.0.1
+appVersion: "8-fpm-alpine"
+home: https://github.com/DrPsychick
+keywords:
+  - php
+  - php-fpm
+  - nginx
+sources:
+  - https://github.com/DrPsychick/charts
+maintainers:
+  - name: DrPsychick
+    email: drpsychick@drsick.net
+    url: https://github.com/DrPsychick
+annotations:
+  artifacthub.io/links: |
+    - name: Ngix image
+      url: https://hub.docker.com/_/nginx
+    - name: PHP FPM image
+      url: https://hub.docker.com/_/php?tab=tags&ordering=last_updated&name=alpine&page=1
