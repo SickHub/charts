@@ -1,0 +1,64 @@
+{{- $fullname := (include "nginx-phpfpm.fullname" .) -}}
+{{- $labels := (include "nginx-phpfpm.labels" .) -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullname }}-nginx
+  namespace: {{ .Release.Namespace }}
+  labels: {{- $labels | nindent 4 }}
+    component: nginx
+    {{- if .Values.podLabels }}
+    {{- include "nginx-phpfpm.tplValue" (dict "value" .Values.podLabels "context" $) | nindent 8 }}
+    {{- end }}
+  annotations:
+    checksum/values: {{ toYaml .Values | sha256sum | trunc 20 | quote }}
+data:
+  {{- range .Values.nginx.htaccess }}
+  htpasswd: |
+    {{- . | nindent 4 }}
+  {{- end }}
+  nginx.conf: |
+    events {
+    }
+    http {
+      server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        # Set nginx to serve files from the shared volume!
+        root {{ .Values.nginx.docRoot }};
+        server_name _;
+        location /health.php {
+          satisfy all;
+          allow 10.0.0.0/8;
+          deny all;
+          include fastcgi_params;
+          fastcgi_param SCRIPT_FILENAME $document_root/health.php;
+          fastcgi_pass {{ include "nginx-phpfpm.fullname" . }}-phpfpm:9000;
+        }
+        location / {
+          {{- if .Values.nginx.htaccess }}
+          satisfy any;
+          auth_basic           "Restricted";
+          auth_basic_user_file /etc/nginx/htpasswd;
+          allow 10.0.0.0/8;
+          deny all;
+          {{- end }}
+          try_files $uri $uri/ =404;
+        }
+        location ~ \.php$ {
+          {{- if .Values.nginx.htaccess }}
+          satisfy any;
+          auth_basic           "Restricted";
+          auth_basic_user_file /etc/nginx/htpasswd;
+          allow 10.0.0.0/8;
+          deny all;
+          {{- end }}
+          include fastcgi_params;
+          fastcgi_param REQUEST_METHOD $request_method;
+          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+          fastcgi_pass {{ include "nginx-phpfpm.fullname" . }}-phpfpm:9000;
+        }
+      }
+    }

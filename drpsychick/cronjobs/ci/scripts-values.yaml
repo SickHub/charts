@@ -26,7 +26,7 @@ configMaps:
 
 jobs:
   start:
-    schedule: "*/15 * * * *"
+    schedule: "* * * * *"
     command:
       - /bin/sh
     args:
@@ -34,5 +34,5 @@ jobs:
     image:
       repository: alpine
   cat:
-    schedule: "*/5 * * * *"
+    schedule: "* * * * *"
     command: ["cat", "/configMaps/config/config.ini"]

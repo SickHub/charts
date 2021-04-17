@@ -1,0 +1,127 @@
+{{- $chart_name := include "nginx-phpfpm.fullname" . }}
+{{- $registry := "" }}
+{{- if .Values.nginx.image.registry }}
+{{- $registry = print .Values.nginx.image.registry "/" }}
+{{- end }}
+{{- $phpfpm_registry := "" }}
+{{- if .Values.phpfpm.image.registry }}
+{{- $phpfpm_registry = print .Values.phpfpm.image.registry "/" }}
+{{- end }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $chart_name }}-nginx
+  labels:
+    {{- include "nginx-phpfpm.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.nginx.autoscaling.enabled }}
+  replicas: {{ .Values.nginx.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "nginx-phpfpm.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "nginx-phpfpm.selectorLabels" . | nindent 8 }}
+        checksum/values: {{ toYaml .Values | sha256sum | trunc 20 | quote }}
+    spec:
+      {{- with .Values.nginx.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "nginx-phpfpm.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if and .Values.phpfpm.staticFiles (not .Values.persistence.enabled) }}
+      initContainers:
+        - name: {{ .Chart.Name }}-static
+          image: "{{ $phpfpm_registry }}{{ .Values.phpfpm.image.repository }}:{{ .Values.phpfpm.image.tag | default .Chart.AppVersion }}"
+          command: [ "sh", "-c" ]
+          args:
+            - "for f in {{ .Values.phpfpm.staticFiles | join " " }}; do cp -a {{ .Values.phpfpm.docRoot }}/$f /docRoot; done"
+          volumeMounts:
+            - name: root
+              mountPath: /docRoot
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ $registry }}{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
+          imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health.php
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health.php
+              port: http
+          resources:
+            {{- toYaml .Values.nginx.resources | nindent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            {{- if .Values.nginx.htaccess }}
+            - name: config
+              mountPath: /etc/nginx/htpasswd
+              subPath: htpasswd
+            {{- end }}
+            {{- range $name, $map := .Values.configMaps }}
+            - name: {{ $name }}
+              mountPath: {{ print $.Values.nginx.docRoot $map.path }}
+            {{- end }}
+            {{- if .Values.persistence.enabled }}
+            - name: root
+              mountPath: {{ .Values.nginx.docRoot }}
+            {{- else if .Values.phpfpm.staticFiles }}
+            - name: root
+              mountPath: {{ .Values.nginx.docRoot }}
+            {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ $chart_name }}-nginx
+        {{- range $name, $map := .Values.configMaps }}
+        - name: {{ $name }}
+          configMap:
+            name: {{ print $chart_name "-" $name }}
+        {{- end }}
+        {{- if .Values.persistence.enabled }}
+        - name: root
+          {{- if .Values.persistence.existingClaim }}
+          persistentVolumeClaim:
+            claimName: {{ printf "%s" (tpl .Values.persistence.existingClaim .) }}
+          {{- else }}
+          persistentVolumeClaim:
+            claimName: {{ $chart_name }}
+          {{- end }}
+        {{- else if .Values.phpfpm.staticFiles }}
+        - name: root
+          emptyDir: {}
+        {{- end }}
+        {{- if $.Values.extraVolumes }}
+        {{- toYaml $.Values.extraVolumes | nindent 8 }}
+        {{- end }}
