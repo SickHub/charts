@@ -104,7 +104,7 @@ persistence:
   # existingVolume: # use this name for volume, instead of chart generated
   accessModes:
     - ReadWriteMany
-  #size: 5Gi
+  # size: 5Gi
   annotations: {}
   mountPath: /docRoot
 
