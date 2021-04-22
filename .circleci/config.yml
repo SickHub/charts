@@ -30,8 +30,7 @@ aliases:
           - role: worker" > kind-config.yaml
           kind delete cluster --name "$CLUSTER_NAME" --quiet || true
           kind create cluster --name "$CLUSTER_NAME" --kubeconfig $KUBECONFIG \
-            --config kind-config.yaml --image "kindest/node:$KIND_K8S_VERSION" \
-            --wait $WAIT_FOR_CONTROLPLANE
+            --config kind-config.yaml --wait $WAIT_FOR_CONTROLPLANE
           # portforward local port (used in config) to control-plane local port (6443)
           socat "TCP-LISTEN:6443,reuseaddr,fork" \
             EXEC:"'docker exec -i test-charts-control-plane socat STDIO TCP:localhost:6443'" &
