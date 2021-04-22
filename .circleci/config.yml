@@ -1,47 +1,11 @@
 version: 2.1
 aliases:
-  - &chart-testing
-    - image: quay.io/helmpack/chart-testing
-  - &docker-dind
-    # need machine:
-    - image: docker:dind
-  - &lint
-    - checkout
-    - run:
-        name: Lint charts
-        command: |
-          ct lint --chart-dirs=${CHARTS_DIR} --all
+  - &docker-dind-kind
+    - image: drpsychick/dind-buildx-helm-kind:latest
   - &deploy
     - checkout
     - setup_remote_docker:
         version: 20.10.2
-    - run:
-        name: Install dependencies
-        # Hint: docker with --volume does not work with remote-docker, so we install `ct`
-        command: |
-          apk --no-cache add curl git py3-pip socat
-          pip3 install --upgrade pip
-          pip3 install yamllint yamale
-          curl -sSLo kubectl-${KUBECTL_VERSION} "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
-          chmod +x kubectl-${KUBECTL_VERSION}
-          mv kubectl-${KUBECTL_VERSION} /usr/local/bin/kubectl
-          mkdir ct
-          (cd ct;
-          curl -sSLo ct-${CT_VERSION}.tgz "https://github.com/helm/chart-testing/releases/download/v${CT_VERSION}/chart-testing_${CT_VERSION}_linux_amd64.tar.gz"
-          tar -xzf ct-${CT_VERSION}.tgz
-          chmod +x ct
-          mv -v ct /usr/local/bin/ct
-          mkdir -p /etc/ct && mv -v etc/* /etc/ct/
-          cd .. && rm -rf ct
-          )
-    - run:
-        name: Install helm
-        command: |
-          curl -sSLo helm-v${HELM_VERSION}.tgz "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz"
-          sha256sum helm-v${HELM_VERSION}.tgz |grep "${HELM_CHECKSUM}" || exit 1
-          tar xvzf helm-v${HELM_VERSION}.tgz
-          chmod +x linux-amd64/helm
-          mv linux-amd64/helm /usr/local/bin/helm
     - run:
         name: Lint charts
         command: |
@@ -53,12 +17,6 @@ aliases:
             helm dep update $chart
             helm package $chart
           done
-    - run:
-        name: Install kind
-        command: |
-          curl -sSLo kind-${KIND_VERSION} "https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-linux-amd64"
-          chmod +x kind-${KIND_VERSION}
-          mv kind-${KIND_VERSION} /usr/local/bin/kind
     - run:
         name: Create and start kind cluster
         command: |
@@ -88,42 +46,38 @@ aliases:
           ct install --namespace $NAMESPACE --remote origin --chart-dirs=${CHARTS_DIR} --all
           kind delete cluster --name "$CLUSTER_NAME" --quiet || true
 jobs:
-  lint:
-    docker: *chart-testing
-    resource_class: small
-    environment:
-      CHARTS_DIR: drpsychick
-    steps: *lint
   deploy:
-    docker: *docker-dind
+    docker: *docker-dind-kind
     resource_class: small
     environment:
       CHARTS_DIR: drpsychick
       BASH_ENV: /etc/profile
-      KIND_VERSION: v0.10.0
-      KIND_K8S_VERSION: v1.20.2@sha256:8f7ea6e7642c0da54f04a7ee10431549c0257315b3a634f6ef2fecaaedb19bab
       KIND_KUBECONFIG: test-charts.kubeconfig
       CLUSTER_NAME: test-charts
       WAIT_FOR_CONTROLPLANE: 60s
       NAMESPACE: default
-      KUBECTL_VERSION: 1.21.0
-      CT_VERSION: 3.3.1
-      HELM_VERSION: 3.5.3
-      HELM_CHECKSUM: 2170a1a644a9e0b863f00c17b761ce33d4323da64fc74562a3a6df2abbf6cd70
     steps: *deploy
 
 workflows:
   version: 2
   chart-test:
     jobs:
-      - lint:
+      - deploy:
           filters:
             branches:
               ignore:
                 - gh-pages
+  weekly:
+    triggers:
+      - schedule:
+          # mondays, 5:33 am, UTC
+          cron: "33 5 * * 1"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
       - deploy:
-          requires:
-            - lint
           filters:
             branches:
               ignore:
