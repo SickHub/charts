@@ -48,6 +48,11 @@ nginx:
     targetCPUUtilizationPercentage: 80
     # targetMemoryUtilizationPercentage: 80
 
+  livenessProbe:
+    path: /health.php
+  readinessProbe:
+    path: /health.php
+
 phpfpm:
   replicaCount: 1
   image:

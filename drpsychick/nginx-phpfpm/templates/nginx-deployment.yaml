@@ -60,11 +60,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /health.php
+              path: {{ .Values.nginx.livenessProbe.path }}
               port: http
           readinessProbe:
             httpGet:
-              path: /health.php
+              path: {{ .Values.nginx.readinessProbe.path }}
               port: http
           resources:
             {{- toYaml .Values.nginx.resources | nindent 12 }}
