@@ -1,3 +1,4 @@
+{{- $api_version := include "common.capabilities.cronjob.apiVersion" . }}
 {{- $chart_name := include "cronjobs.fullname" . }}
 {{- $chart_labels := include "cronjobs.labels" . }}
 {{- $chart_selector_labels := include "cronjobs.selectorLabels" . }}
@@ -17,7 +18,7 @@
 {{- end }}
 {{- $checksum := toYaml . | sha256sum | trunc 20 | quote }}
 ---
-apiVersion: batch/v1beta1
+apiVersion: {{ $api_version }}
 kind: CronJob
 metadata:
   name: {{ $chart_name }}-{{ $name }}
@@ -64,7 +65,7 @@ spec:
           {{- if $.Values.dockerConfigJson }}
             - name: {{ $chart_name }}-registry
           {{- end }}
-          {{- if $.Values.serviceAccount.create }}
+          {{- if or $.Values.serviceAccount.create $.Values.serviceAccount.name }}
           serviceAccountName: {{ $service_account_name }}
           {{- end }}
           securityContext:
