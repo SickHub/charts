@@ -24,3 +24,12 @@ On Artifact Hub: https://artifacthub.io/packages/search?repo=drpsychick
 ## Contribute
 * Create issues, create PRs, ... let's make this better together.
 * See [Contributing](CONTRIBUTING.md)
+
+### Publish new chart version
+```shell
+# (usual process) change chart version in master commit, then publish:
+./publish-chart.sh
+
+# force bump the version of all charts:
+./publish-chart.sh UPDATE
+```
