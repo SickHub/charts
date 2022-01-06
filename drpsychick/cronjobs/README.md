@@ -103,8 +103,5 @@ docker run --rm -it -v $PWD:/data quay.io/helmpack/chart-testing  bash -c \
   "helm repo add common https://charts.bitnami.com/bitnami; ct lint --remote origin --chart-dirs=/data/drpsychick --all"
 ```
 
-
-```
-
 ## Credits
 * Cronjobs icon from  [Those Icons](https://www.flaticon.com/de/autoren/those-icons) found on  [FlatIcon](https://www.flaticon.com/)
