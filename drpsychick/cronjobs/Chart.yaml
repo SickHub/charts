@@ -2,7 +2,7 @@ apiVersion: v2
 name: cronjobs
 description: A generic helm cronjob chart for kubernetes
 type: application
-version: 0.0.8
+version: 0.0.9
 appVersion: latest
 home: https://github.com/DrPsychick
 icon: https://raw.githubusercontent.com/DrPsychick/charts/master/drpsychick/cronjobs/icon.png
@@ -22,5 +22,5 @@ annotations:
       url: https://hub.docker.com/_/busybox
 dependencies:
   - name: common
-    version: 1.10.3
+    version: 0.0.9
     repository: https://charts.bitnami.com/bitnami
