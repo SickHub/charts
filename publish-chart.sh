@@ -21,7 +21,7 @@ git push
 echo "--> Helm package and re-index"
 for c in cronjobs nginx-phpfpm; do
   [ -z "$(git status -s ./drpsychick/$c/Chart.yaml)" -a -z "$UPDATE" ] && bumpChartVersion $c
-  (cd drpsychick; helm package $c)
+  (cd drpsychick; helm dependency update $c; helm package $c)
   mv ./drpsychick/$c-*.tgz ./docs/
 done
 
