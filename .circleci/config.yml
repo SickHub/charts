@@ -9,6 +9,7 @@ aliases:
     - run:
         name: Lint charts
         command: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami 
           ct lint --remote origin --chart-dirs=${CHARTS_DIR} --all
     - run:
         name: Package charts
