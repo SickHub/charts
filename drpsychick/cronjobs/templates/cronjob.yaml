@@ -31,23 +31,30 @@ spec:
   failedJobsHistoryLimit: {{ default 1 .failedJobsHistoryLimit }}
   successfulJobsHistoryLimit: {{ default 1 .successfulJobsHistoryLimit }}
   schedule: {{ .schedule | quote }}
-  {{- /*
-  startingDeadlineSeconds
-  suspend true/false
-  */}}
+  {{- if .suspended }}
+  suspended: {{ .suspended }}
+  {{- end }}
+  {{- if .startingDeadlineSeconds }}
+  startingDeadlineSeconds: {{ .startingDeadlineSeconds }}
+  {{- end }}
   jobTemplate:
     metadata:
     spec:
-      {{- /*
-      activeDeadlineSeconds:
-      backoffLimit: 6
-      completions:
-      parallelism:
-      ttlSecondsAfterFinished:
-      selector: # auto generated, not needed
-        matchLabels:
-          {{- $chart_selector_labels | nindent 10 }}
-      */}}
+      {{- if .activeDeadlineSeconds }}
+      activeDeadlineSeconds: {{ .activeDeadlineSeconds }}
+      {{- end }}
+      {{- if .backoffLimit }}
+      backoffLimit: {{ .backoffLimit }}
+      {{- end }}
+      {{- if .completions }}
+      completions: {{ .completions }}
+      {{- end }}
+      {{- if .parallelism }}
+      parallelism: {{ .parallelism }}
+      {{- end }}
+      {{- if .ttlSecondsAfterFinished }}
+      ttlSecondsAfterFinished: {{ .ttlSecondsAfterFinished }}
+      {{- end}}
       template:
         metadata:
           {{- with .podAnnotations }}
@@ -57,7 +64,7 @@ spec:
           labels:
             {{- $chart_selector_labels | nindent 12 }}
         spec:
-          restartPolicy: {{ default "OnFailure" .restartPolicy }}
+          restartPolicy: {{ default "Never" .restartPolicy }}
           imagePullSecrets:
           {{- with default $image_pull_secrets .imagePullSecrets }}
             {{- toYaml . | nindent 12 }}

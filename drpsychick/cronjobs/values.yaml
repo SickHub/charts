@@ -63,6 +63,9 @@ jobs: {}
 #      - echo "foo"; ps fauxwww
 #    image:
 #      repository: alpine
+#    # see https://github.com/kubernetes/kubernetes/issues/74848#issuecomment-475178355
+#    #restartPolicy: Never
+#    concurrencyPolicy|parallelism|backoffLimit|ttlSecondsAfterFinished|...
 
 serviceAccount:
   # Specifies whether a service account should be created

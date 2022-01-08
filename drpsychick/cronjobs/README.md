@@ -92,10 +92,10 @@ secrets:
 * See [Contributing](../../CONTRIBUTING.md)
 
 ### Testing
-* Run chart-testing locally
+* Run chart-testing locally (requires `brew install chart-testing yamllint; pip3 install yamale`)
 ```shell
 helm repo add common https://charts.bitnami.com/bitnami
-ct lint --remote origin --chart-dirs=./drpsychick --all
+ct lint --remote origin --chart-dirs=$PWD/drpsychick --all
 ```
 * Run chart-testing in docker
 ```shell
