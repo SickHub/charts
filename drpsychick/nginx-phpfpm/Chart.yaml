@@ -2,7 +2,7 @@ apiVersion: v2
 name: nginx-phpfpm
 description: A chart for an nginx pod with multiple phpfpm pods
 type: application
-version: 0.0.4
+version: 0.0.5
 appVersion: "8-fpm-alpine"
 home: https://github.com/DrPsychick
 icon: https://raw.githubusercontent.com/DrPsychick/charts/master/drpsychick/nginx-phpfpm/icon.png
