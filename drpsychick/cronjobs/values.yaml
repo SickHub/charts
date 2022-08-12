@@ -64,8 +64,14 @@ jobs: {}
 #    image:
 #      repository: alpine
 #    # see https://github.com/kubernetes/kubernetes/issues/74848#issuecomment-475178355
-#    #restartPolicy: Never
-#    concurrencyPolicy|parallelism|backoffLimit|ttlSecondsAfterFinished|...
+#    # restartPolicy: Never
+#    # startingDeadlineSeconds: 60
+#    # activeDeadlineSeconds: 60
+#    # backoffLimit: 3
+#    # completions: 3
+#    # parallelism: 1
+#    # ttlSecondsAfterFinished: 60
+#    # suspend: false
 
 serviceAccount:
   # Specifies whether a service account should be created

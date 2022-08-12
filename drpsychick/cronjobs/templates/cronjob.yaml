@@ -31,8 +31,8 @@ spec:
   failedJobsHistoryLimit: {{ default 1 .failedJobsHistoryLimit }}
   successfulJobsHistoryLimit: {{ default 1 .successfulJobsHistoryLimit }}
   schedule: {{ .schedule | quote }}
-  {{- if .suspended }}
-  suspended: {{ .suspended }}
+  {{- if .suspend }}
+  suspend: {{ .suspend }}
   {{- end }}
   {{- if .startingDeadlineSeconds }}
   startingDeadlineSeconds: {{ .startingDeadlineSeconds }}

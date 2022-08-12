@@ -36,3 +36,8 @@ jobs:
   cat:
     schedule: "* * * * *"
     command: ["cat", "/configMaps/config/config.ini"]
+
+  suspended:
+    schedule: "* * * * *"
+    command: ["cat", "/var/log/messages"]
+    suspend: true
