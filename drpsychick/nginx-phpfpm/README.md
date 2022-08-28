@@ -9,10 +9,10 @@ Both are independently scalable, the `nginx` pod forwards PHP traffic to the `ph
 
 ## Deploy nginx-phpfpm
 ```shell
-helm repo add drpsychick https://drpsychick.github.io/charts
+helm repo add sickhub https://sickhub.github.io/charts
 helm repo update
-helm search repo drpsychick
-helm upgrade --create-namespace --namespace test --install --values values.yaml my-release drpsychick/nginx-phpfpm
+helm search repo sickhub
+helm upgrade --create-namespace --namespace test --install --values values.yaml my-release sickhub/nginx-phpfpm
 ```
 
 ## Setup

@@ -50,7 +50,7 @@ jobs:
     docker: *docker-dind-kind
     resource_class: small
     environment:
-      CHARTS_DIR: drpsychick
+      CHARTS_DIR: sickhub
       BASH_ENV: /etc/profile
       KIND_KUBECONFIG: test-charts.kubeconfig
       CLUSTER_NAME: test-charts
