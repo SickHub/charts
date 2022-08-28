@@ -22,5 +22,5 @@ annotations:
       url: https://hub.docker.com/_/busybox
 dependencies:
   - name: common
-    version: 1.17.1
+    version: 2.0.1
     repository: https://charts.bitnami.com/bitnami
