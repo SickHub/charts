@@ -4,16 +4,16 @@ description: A generic helm cronjob chart for kubernetes
 type: application
 version: 0.1.2
 appVersion: latest
-home: https://github.com/DrPsychick
-icon: https://raw.githubusercontent.com/DrPsychick/charts/master/drpsychick/cronjobs/icon.png
+home: https://github.com/SickHub
+icon: https://raw.githubusercontent.com/SickHub/charts/master/sickhub/cronjobs/icon.png
 keywords:
   - cronjob
 sources:
-  - https://github.com/DrPsychick/charts
+  - https://github.com/SickHub/charts
 maintainers:
-  - name: DrPsychick
+  - name: SickHub
     email: drpsychick@drsick.net
-    url: https://github.com/DrPsychick
+    url: https://github.com/SickHub
 annotations:
   artifacthub.io/links: |
     - name: Image source

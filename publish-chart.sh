@@ -5,10 +5,10 @@
 set -e
 
 function bumpChartVersion() {
-  v=$(grep '^version:' ./drpsychick/$1/Chart.yaml | awk -F: '{print $2}' | tr -d ' ')
+  v=$(grep '^version:' ./sickhub/$1/Chart.yaml | awk -F: '{print $2}' | tr -d ' ')
   patch=${v/*.*./}
   nv=${v/%$patch/}$((patch+1))
-  sed -i "" -e "s/^version: .*/version: $nv/" ./drpsychick/$1/Chart.yaml
+  sed -i "" -e "s/^version: .*/version: $nv/" ./sickhub/$1/Chart.yaml
 }
 
 # checkout github-pages
@@ -20,12 +20,12 @@ git push
 
 echo "--> Helm package and re-index"
 for c in cronjobs nginx-phpfpm; do
-  [ -z "$(git status -s ./drpsychick/$c/Chart.yaml)" -a -z "$UPDATE" ] && bumpChartVersion $c
-  (cd drpsychick; helm dependency update $c; helm package $c)
-  mv ./drpsychick/$c-*.tgz ./docs/
+  [ -z "$(git status -s ./sickhub/$c/Chart.yaml)" -a -z "$UPDATE" ] && bumpChartVersion $c
+  (cd sickhub; helm dependency update $c; helm package $c)
+  mv ./sickhub/$c-*.tgz ./docs/
 done
 
-helm repo index ./docs --url https://drpsychick.github.io/charts/
+helm repo index ./docs --url https://sickhub.github.io/charts/
 
 echo "--> Commit and push changes to gh-pages"
 git add .

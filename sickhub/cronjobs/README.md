@@ -7,10 +7,10 @@ Components:
 
 ## Deploy cronjobs
 ```shell
-helm repo add drpsychick https://drpsychick.github.io/charts
+helm repo add sickhub https://sickhub.github.io/charts
 helm repo update
-helm search repo drpsychick
-helm upgrade --create-namespace --namespace test --install --values values.yaml my-jobs drpsychick/cronjobs
+helm search repo sickhub
+helm upgrade --create-namespace --namespace test --install --values values.yaml my-jobs sickhub/cronjobs
 ```
 
 ## Setup
@@ -95,12 +95,12 @@ secrets:
 * Run chart-testing locally (requires `brew install chart-testing yamllint; pip3 install yamale`)
 ```shell
 helm repo add common https://charts.bitnami.com/bitnami
-ct lint --remote origin --chart-dirs=$PWD/drpsychick --all
+ct lint --remote origin --chart-dirs=$PWD/sickhub --all
 ```
 * Run chart-testing in docker
 ```shell
 docker run --rm -it -v $PWD:/data quay.io/helmpack/chart-testing  bash -c \
-  "helm repo add common https://charts.bitnami.com/bitnami; ct lint --remote origin --chart-dirs=/data/drpsychick --all"
+  "helm repo add common https://charts.bitnami.com/bitnami; ct lint --remote origin --chart-dirs=/data/sickhub --all"
 ```
 
 ## Credits

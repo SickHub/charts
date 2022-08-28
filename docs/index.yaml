@@ -17,13 +17,13 @@ entries:
     description: A generic helm cronjob chart for kubernetes
     digest: d84eede5d462e3c2f22cb4c4c244eb06616f06e17413d5891366b9b885338b50
     home: https://github.com/DrPsychick
-    icon: https://raw.githubusercontent.com/DrPsychick/charts/master/drpsychick/cronjobs/icon.png
+    icon: https://raw.githubusercontent.com/DrPsychick/charts/master/sickhub/cronjobs/icon.png
     keywords:
     - cronjob
     maintainers:
     - email: drpsychick@drsick.net
-      name: DrPsychick
-      url: https://github.com/DrPsychick
+      name: SickHub
+      url: https://github.com/SickHub
     name: cronjobs
     sources:
     - https://github.com/DrPsychick/charts
