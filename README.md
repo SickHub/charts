@@ -1,4 +1,4 @@
-[![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/drpsychick)](https://artifacthub.io/packages/search?repo=drpsychick)
+[![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/sickhub)](https://artifacthub.io/packages/search?org=sickhub)
 [![CircleCI](https://img.shields.io/circleci/build/github/SickHub/charts)](https://app.circleci.com/pipelines/github/SickHub/charts)
 [![license](https://img.shields.io/github/license/sickhub/charts.svg)](https://github.com/sickhub/charts/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/sickhub/charts.svg)](https://github.com/sickhub/charts)
@@ -19,7 +19,7 @@ helm repo add sickhub https://sickhub.github.io/charts
 helm search repo sickhub
 ```
 
-On Artifact Hub: https://artifacthub.io/packages/search?repo=drpsychick
+On Artifact Hub: https://artifacthub.io/packages/search?org=sickhub
 
 ## Contribute
 * Create issues, create PRs, ... let's make this better together.
