@@ -47,6 +47,8 @@ spec:
           volumeMounts:
             - name: root
               mountPath: /docRoot
+          resources:
+            {{- toYaml .Values.nginx.resources | nindent 12 }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
