@@ -9,6 +9,7 @@ metadata:
   name: {{ $chart_name }}-phpfpm
   labels:
     {{- include "nginx-phpfpm.labels" . | nindent 4 }}
+    app.kubernetes.io/component: phpfpm
 spec:
   {{- if not .Values.phpfpm.autoscaling.enabled }}
   replicas: {{ .Values.phpfpm.replicaCount }}
