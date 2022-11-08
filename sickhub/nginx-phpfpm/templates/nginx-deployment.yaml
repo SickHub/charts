@@ -20,6 +20,7 @@ spec:
   selector:
     matchLabels:
       {{- include "nginx-phpfpm.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: nginx
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -28,6 +29,7 @@ spec:
       {{- end }}
       labels:
         {{- include "nginx-phpfpm.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: nginx
         checksum/values: {{ toYaml .Values | sha256sum | trunc 20 | quote }}
     spec:
       {{- with .Values.nginx.imagePullSecrets }}
