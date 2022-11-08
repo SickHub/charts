@@ -9,7 +9,37 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2022-10-15T16:20:04.258375+02:00"
+    created: "2022-11-08T21:58:43.126013+01:00"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      version: 2.1.2
+    description: A generic helm cronjob chart for kubernetes
+    digest: f42fab086ea93865a8fa1b990f2868b52deec39a86bd423b5f75cda0572eb4f3
+    home: https://github.com/SickHub
+    icon: https://raw.githubusercontent.com/SickHub/charts/master/sickhub/cronjobs/icon.png
+    keywords:
+    - cronjob
+    maintainers:
+    - email: drpsychick@drsick.net
+      name: SickHub
+      url: https://github.com/SickHub
+    name: cronjobs
+    sources:
+    - https://github.com/SickHub/charts
+    type: application
+    urls:
+    - https://sickhub.github.io/charts/cronjobs-0.1.5.tgz
+    version: 0.1.5
+  - annotations:
+      artifacthub.io/links: |
+        - name: Image source
+          url: https://github.com/docker-library/busybox
+        - name: Image DockerHub
+          url: https://hub.docker.com/_/busybox
+    apiVersion: v2
+    appVersion: latest
+    created: "2022-11-08T21:58:43.125081+01:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -39,7 +69,7 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2022-10-15T16:20:04.257452+02:00"
+    created: "2022-11-08T21:58:43.123763+01:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -69,7 +99,7 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2022-10-15T16:20:04.25651+02:00"
+    created: "2022-11-08T21:58:43.122431+01:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -99,7 +129,7 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2022-10-15T16:20:04.255533+02:00"
+    created: "2022-11-08T21:58:43.120233+01:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -129,7 +159,7 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2022-10-15T16:20:04.25427+02:00"
+    created: "2022-11-08T21:58:43.119083+01:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -159,7 +189,7 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2022-10-15T16:20:04.253347+02:00"
+    created: "2022-11-08T21:58:43.117896+01:00"
     description: A generic helm cronjob chart for kubernetes
     digest: d07dbe13fe3f82444408da5ae3c330ae3a95eccbaba93087ba0a70ff4e91b9bc
     home: https://github.com/DrPsychick
@@ -185,7 +215,7 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2022-10-15T16:20:04.252937+02:00"
+    created: "2022-11-08T21:58:43.117439+01:00"
     description: A generic helm cronjob chart for kubernetes
     digest: 2e587bc0986c4dedd123c27d2f1d30bf6412fa72da9c2558f252d04b95dd079c
     home: https://github.com/DrPsychick
@@ -210,7 +240,7 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2022-10-15T16:20:04.252609+02:00"
+    created: "2022-11-08T21:58:43.117102+01:00"
     description: A generic helm cronjob chart for kubernetes
     digest: 710bbe5a76de29943bd9826b48b1beeb1c3b13b2f89a81b23770b160eea4adf6
     home: https://github.com/DrPsychick
@@ -233,7 +263,7 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2022-10-15T16:20:04.252315+02:00"
+    created: "2022-11-08T21:58:43.116753+01:00"
     description: A generic helm cronjob chart for kubernetes
     digest: 9cddb23999a9dea0743f036d0d543a4f730a193d33510a2d58a4879d516355c2
     home: https://github.com/DrPsychick
@@ -256,7 +286,7 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
-    created: "2022-10-15T16:20:04.252007+02:00"
+    created: "2022-11-08T21:58:43.116369+01:00"
     description: A generic helm cronjob chart for kubernetes
     digest: 15716b2116ed6677472ba2b2c1017a5a5901c52ce9c45139c0e2a740e9bc6e43
     home: https://github.com/DrPsychick
@@ -273,7 +303,7 @@ entries:
     version: 0.0.3
   - apiVersion: v2
     appVersion: latest
-    created: "2022-10-15T16:20:04.251729+02:00"
+    created: "2022-11-08T21:58:43.116039+01:00"
     description: A generic helm cronjob chart for kubernetes
     digest: 91bb4be72bb96f3c507a1508f3e181e6b7af14cad24439d68cdfd79d8c394758
     name: cronjobs
@@ -283,7 +313,7 @@ entries:
     version: 0.0.2
   - apiVersion: v2
     appVersion: latest
-    created: "2022-10-15T16:20:04.251501+02:00"
+    created: "2022-11-08T21:58:43.115632+01:00"
     description: A generic helm cronjob chart for kubernetes
     digest: c735ee2fc39fedacce44ecd086d43a95604d4645cb26311eb763c7cfd5aee047
     name: cronjobs
@@ -300,7 +330,35 @@ entries:
           url: https://hub.docker.com/_/php?tab=tags&ordering=last_updated&name=alpine&page=1
     apiVersion: v2
     appVersion: 8-fpm-alpine
-    created: "2022-10-15T16:20:04.262686+02:00"
+    created: "2022-11-08T21:58:43.131176+01:00"
+    description: A chart for an nginx pod with multiple phpfpm pods
+    digest: 2b2a292b8181ca395b417385bad7462f3dc07d735ecd289e379276f56e6b451f
+    home: https://github.com/SickHub
+    icon: https://raw.githubusercontent.com/SickHub/charts/master/sickhub/nginx-phpfpm/icon.png
+    keywords:
+    - php
+    - php-fpm
+    - nginx
+    maintainers:
+    - email: drpsychick@drsick.net
+      name: SickHub
+      url: https://github.com/SickHub
+    name: nginx-phpfpm
+    sources:
+    - https://github.com/SickHub/charts
+    type: application
+    urls:
+    - https://sickhub.github.io/charts/nginx-phpfpm-0.0.9.tgz
+    version: 0.0.9
+  - annotations:
+      artifacthub.io/links: |
+        - name: Ngix image
+          url: https://hub.docker.com/_/nginx
+        - name: PHP FPM image
+          url: https://hub.docker.com/_/php?tab=tags&ordering=last_updated&name=alpine&page=1
+    apiVersion: v2
+    appVersion: 8-fpm-alpine
+    created: "2022-11-08T21:58:43.130563+01:00"
     description: A chart for an nginx pod with multiple phpfpm pods
     digest: 7e4b38ad11910e8321d79b7171b92ab934eaf5eec6b90ad31b3976b7ed3ca6f9
     home: https://github.com/SickHub
@@ -328,7 +386,7 @@ entries:
           url: https://hub.docker.com/_/php?tab=tags&ordering=last_updated&name=alpine&page=1
     apiVersion: v2
     appVersion: 8-fpm-alpine
-    created: "2022-10-15T16:20:04.261384+02:00"
+    created: "2022-11-08T21:58:43.129893+01:00"
     description: A chart for an nginx pod with multiple phpfpm pods
     digest: 2731014445645a4ad1cc3a83ef90634c51189d66127d71f01795100184141734
     home: https://github.com/SickHub
@@ -356,7 +414,7 @@ entries:
           url: https://hub.docker.com/_/php?tab=tags&ordering=last_updated&name=alpine&page=1
     apiVersion: v2
     appVersion: 8-fpm-alpine
-    created: "2022-10-15T16:20:04.260728+02:00"
+    created: "2022-11-08T21:58:43.128842+01:00"
     description: A chart for an nginx pod with multiple phpfpm pods
     digest: 26e63219926799e1942564939e971d5c0ec45dec30ff857437abd4c194c515c9
     home: https://github.com/DrPsychick
@@ -384,7 +442,7 @@ entries:
           url: https://hub.docker.com/_/php?tab=tags&ordering=last_updated&name=alpine&page=1
     apiVersion: v2
     appVersion: 8-fpm-alpine
-    created: "2022-10-15T16:20:04.26013+02:00"
+    created: "2022-11-08T21:58:43.127956+01:00"
     description: A chart for an nginx pod with multiple phpfpm pods
     digest: a7f8bfdeadb1c861d6934bfa450983fd4c48d59ee58a69ba6d05b0229ce77a6c
     home: https://github.com/DrPsychick
@@ -412,7 +470,7 @@ entries:
           url: https://hub.docker.com/_/php?tab=tags&ordering=last_updated&name=alpine&page=1
     apiVersion: v2
     appVersion: 8-fpm-alpine
-    created: "2022-10-15T16:20:04.259531+02:00"
+    created: "2022-11-08T21:58:43.127319+01:00"
     description: A chart for an nginx pod with multiple phpfpm pods
     digest: c420e53c1e851f9e1221b540e5bda3b657b491fec3b721e04620eba1a19e5f14
     home: https://github.com/DrPsychick
@@ -440,7 +498,7 @@ entries:
           url: https://hub.docker.com/_/php?tab=tags&ordering=last_updated&name=alpine&page=1
     apiVersion: v2
     appVersion: 8-fpm-alpine
-    created: "2022-10-15T16:20:04.258962+02:00"
+    created: "2022-11-08T21:58:43.126685+01:00"
     description: A chart for an nginx pod with multiple phpfpm pods
     digest: c8a89f120117e45d01f69c68bd47163b885a3442bbbf53227716269a1098526a
     home: https://github.com/DrPsychick
@@ -460,4 +518,4 @@ entries:
     urls:
     - https://sickhub.github.io/charts/nginx-phpfpm-0.0.2.tgz
     version: 0.0.2
-generated: "2022-10-15T16:20:04.251178+02:00"
+generated: "2022-11-08T21:58:43.115112+01:00"
