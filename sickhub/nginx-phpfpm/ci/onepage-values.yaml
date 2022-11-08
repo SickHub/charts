@@ -6,5 +6,5 @@ configMaps:
     data:
       info.php: |
         <?php phpinfo(); ?>
-      health.php: |
+      ok.php: |
         <?php print("OK"); ?>
