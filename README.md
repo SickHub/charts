@@ -1,5 +1,5 @@
 [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/sickhub)](https://artifacthub.io/packages/search?org=sickhub)
-[![CircleCI](https://img.shields.io/circleci/build/github/SickHub/charts)](https://app.circleci.com/pipelines/github/SickHub/charts)
+[![Workflow Status](https://img.shields.io/github/actions/workflow/status/sickhub/charts/release.yaml)](https://github.com/SickHub/charts/actions)
 [![license](https://img.shields.io/github/license/sickhub/charts.svg)](https://github.com/sickhub/charts/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/sickhub/charts.svg)](https://github.com/sickhub/charts)
 [![Contributors](https://img.shields.io/github/contributors/sickhub/charts.svg)](https://github.com/sickhub/charts/graphs/contributors)
@@ -26,10 +26,5 @@ On Artifact Hub: https://artifacthub.io/packages/search?org=sickhub
 * See [Contributing](CONTRIBUTING.md)
 
 ### Publish new chart version
-```shell
-# (usual process) change chart version in master commit, then publish:
-./publish-chart.sh UPDATE
-
-# force bump the version of all charts:
-./publish-chart.sh
-```
+Create a PR that includes a version change in `Chart.yaml` of the Helm Chart. The action `chart-releaser` will detect
+it, package it and create a new release in GitHub as well as update the `gh-pages` repository `index.yaml`.
