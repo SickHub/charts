@@ -1,0 +1,36 @@
+name: Release Charts
+on:
+  workflow_run:
+    workflows:
+      - "Test Charts"
+    branches:
+      - master
+    types:
+      - completed
+
+jobs:
+  release:
+    name: Publish Helm Chart
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Configure Helm repositories
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.5.0
+        with:
+          config: .github/cr-config.yaml
+          charts_dir: sickhub
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

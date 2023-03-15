@@ -1,0 +1,3 @@
+pages-index-path: docs/index.yaml
+generate-release-notes: true
+skip-existing: true
