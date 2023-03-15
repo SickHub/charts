@@ -37,6 +37,7 @@ jobs:
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
           ct lint --chart-dirs sickhub --all
+
       - name: Create kind cluster
         uses: helm/kind-action@v1.5.0
         if: github.ref == 'refs/heads/master' || steps.list-changed.outputs.changed == 'true'
