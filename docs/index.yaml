@@ -9,6 +9,36 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
+    created: "2023-03-16T18:45:54.154087134Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      version: 2.2.4
+    description: A generic helm cronjob chart for kubernetes
+    digest: c97d681f4965dbaaef8d32b8f5ed93d33f52b9c77ab43907f9774b4342356ed4
+    home: https://github.com/SickHub
+    icon: https://raw.githubusercontent.com/SickHub/charts/master/sickhub/cronjobs/icon.png
+    keywords:
+    - cronjob
+    maintainers:
+    - email: drpsychick@drsick.net
+      name: SickHub
+      url: https://github.com/SickHub
+    name: cronjobs
+    sources:
+    - https://github.com/SickHub/charts
+    type: application
+    urls:
+    - https://github.com/SickHub/charts/releases/download/cronjobs-0.1.6/cronjobs-0.1.6.tgz
+    version: 0.1.6
+  - annotations:
+      artifacthub.io/links: |
+        - name: Image source
+          url: https://github.com/docker-library/busybox
+        - name: Image DockerHub
+          url: https://hub.docker.com/_/busybox
+    apiVersion: v2
+    appVersion: latest
     created: "2022-11-08T21:58:43.126013+01:00"
     dependencies:
     - name: common
@@ -330,6 +360,34 @@ entries:
           url: https://hub.docker.com/_/php?tab=tags&ordering=last_updated&name=alpine&page=1
     apiVersion: v2
     appVersion: 8-fpm-alpine
+    created: "2023-03-16T18:45:54.330205682Z"
+    description: A chart for an nginx pod with multiple phpfpm pods
+    digest: 00efe79df778fae9586694216bfdd9945f89ecd54f3f97602702e8794a51ca80
+    home: https://github.com/SickHub
+    icon: https://raw.githubusercontent.com/SickHub/charts/master/sickhub/nginx-phpfpm/icon.png
+    keywords:
+    - php
+    - php-fpm
+    - nginx
+    maintainers:
+    - email: drpsychick@drsick.net
+      name: SickHub
+      url: https://github.com/SickHub
+    name: nginx-phpfpm
+    sources:
+    - https://github.com/SickHub/charts
+    type: application
+    urls:
+    - https://github.com/SickHub/charts/releases/download/nginx-phpfpm-0.0.10/nginx-phpfpm-0.0.10.tgz
+    version: 0.0.10
+  - annotations:
+      artifacthub.io/links: |
+        - name: Ngix image
+          url: https://hub.docker.com/_/nginx
+        - name: PHP FPM image
+          url: https://hub.docker.com/_/php?tab=tags&ordering=last_updated&name=alpine&page=1
+    apiVersion: v2
+    appVersion: 8-fpm-alpine
     created: "2022-11-08T21:58:43.131176+01:00"
     description: A chart for an nginx pod with multiple phpfpm pods
     digest: 2b2a292b8181ca395b417385bad7462f3dc07d735ecd289e379276f56e6b451f
@@ -518,4 +576,4 @@ entries:
     urls:
     - https://sickhub.github.io/charts/nginx-phpfpm-0.0.2.tgz
     version: 0.0.2
-generated: "2022-11-08T21:58:43.115112+01:00"
+generated: "2023-03-16T18:45:54.330473894Z"
