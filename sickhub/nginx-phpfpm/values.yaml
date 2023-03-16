@@ -56,7 +56,19 @@ nginx:
     maxReplicas: 3
     targetCPUUtilizationPercentage: 80
     # targetMemoryUtilizationPercentage: 80
-    # behaviour: {}
+    behaviour: {}
+    # scaleDown:
+    #  stabilizationWindowSeconds: 300
+    #  policies:
+    #   - type: Pods
+    #     value: 1
+    #     periodSeconds: 180
+    # scaleUp:
+    #   stabilizationWindowSeconds: 300
+    #   policies:
+    #   - type: Pods
+    #     value: 2
+    #     periodSeconds: 60
     ## requires custom.metrics.k8s.io
     # requestsPerSecond:
     #   value: 5
