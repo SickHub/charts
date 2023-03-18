@@ -13,6 +13,9 @@ spec:
   {{- if not .Values.phpfpm.autoscaling.enabled }}
   replicas: {{ .Values.phpfpm.replicaCount }}
   {{- end }}
+  {{- with .Values.phpfpm.strategy }}
+  strategy: {{ toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "nginx-phpfpm.selectorLabels" . | nindent 6 }}
@@ -55,6 +58,13 @@ spec:
           readinessProbe:
             tcpSocket:
               port: phpfpm
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sh
+                  - '-c'
+                  - 'sleep {{ .Values.phpfpm.shutdownDelay }} && kill -QUIT 1'
           resources:
             {{- toYaml .Values.phpfpm.resources | nindent 12 }}
           volumeMounts:

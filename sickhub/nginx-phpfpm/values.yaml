@@ -10,8 +10,17 @@ dockerConfigJson:
 
 imagePullSecrets: []
 
+autoscaling:
+  # autoscaling/v1, autoscaling/v2beta, autoscaling/v2
+  apiVersionOverride: ""
+
 nginx:
   replicaCount: 1
+  shutdownDelay: 10
+  strategy: {}
+  # rollingUpdate:
+  #     maxUnavailable: 0
+  #     maxSurge: 3
   image:
     registry:
     repository: nginx
@@ -44,17 +53,41 @@ nginx:
   autoscaling:
     enabled: false
     minReplicas: 1
-    maxReplicas: 10
+    maxReplicas: 3
     targetCPUUtilizationPercentage: 80
     # targetMemoryUtilizationPercentage: 80
-
+    behaviour: {}
+    # scaleDown:
+    #  stabilizationWindowSeconds: 300
+    #  policies:
+    #   - type: Pods
+    #     value: 1
+    #     periodSeconds: 180
+    # scaleUp:
+    #   stabilizationWindowSeconds: 300
+    #   policies:
+    #   - type: Pods
+    #     value: 2
+    #     periodSeconds: 60
+    ## requires custom.metrics.k8s.io
+    # requestsPerSecond:
+    #   value: 5
+    #   name: requests-per-second
+    # packetsPerSecond:
+    #   averageValue: 30
+    #   name: packets-per-second
   livenessProbe:
-    path: /health.php
+    path: /livez.html
   readinessProbe:
-    path: /health.php
+    path: /healthz.php
 
 phpfpm:
   replicaCount: 1
+  shutdownDelay: 20
+  strategy: {}
+    # rollingUpdate:
+    #     maxUnavailable: 0
+    #     maxSurge: 3
   image:
     registry:
     repository: php
@@ -90,7 +123,9 @@ configMaps:
   scripts:
     path: /
     data:
-      health.php: |
+      livez.html: |
+        <html><body>OK</body></html>
+      healthz.php: |
         <?php phpinfo(); ?>
 #  configs:
 #    path: /etc

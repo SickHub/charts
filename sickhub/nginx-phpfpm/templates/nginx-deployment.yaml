@@ -17,6 +17,9 @@ spec:
   {{- if not .Values.nginx.autoscaling.enabled }}
   replicas: {{ .Values.nginx.replicaCount }}
   {{- end }}
+  {{- with .Values.nginx.strategy }}
+  strategy: {{ toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "nginx-phpfpm.selectorLabels" . | nindent 6 }}
@@ -70,6 +73,13 @@ spec:
             httpGet:
               path: {{ .Values.nginx.readinessProbe.path }}
               port: http
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sh
+                  - '-c'
+                  - 'sleep {{ .Values.nginx.shutdownDelay }} && /usr/sbin/nginx -s quit'
           resources:
             {{- toYaml .Values.nginx.resources | nindent 12 }}
           volumeMounts:

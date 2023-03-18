@@ -111,10 +111,70 @@ you can use `persistence.enabled = true` to
 * B) provide an `existingVolume` to use with a PVC created by the chart 
 * C) provide an `existingClaim` to use an existing PVC
 
+## Load testing
+Install the Chart with `loadtest-values.yaml` which includes a few simple scripts (endpoints), one of which causes
+the PHP process to consume all available CPU for a few seconds.
+```shell
+helm upgrade --install load-test sickhub/nginx-phpfpm --values sickhub/nginx-phpfpm/ci/loadtest-values.yaml
+```
+
+### Run tests with `wrk`
+- `-d 10s` test duration
+- `-t 20` number of threads
+- `-c 20` number of connections to keep open (must be >= threads)
+```shell
+wrk -d 10s -t 50 -c 50 http://localhost/healthz.php # 10 seconds, 50 threads, 100 connections
+wrk -d 10s -t 5 -c 10 http://localhost/livez.html # static HTML page from Nginx
+wrk -d 10s -t 20 -c 40 http://localhost/healthz.php # phpinfo from PHP container
+wrk -d 10s -t 5 -c 10 http://localhost/load.php # 100% load for X seconds, then return phpinfo
+```
+
+Run test suite:
+- 3 threads which cause load
+- 50 threads requesting PHP
+- 10 threads requesting static HTML 
+```shell
+export time=300s
+wrk -d $time -t 3 -c 3 http://localhost/load.php &
+sleep 1
+wrk -d $time -t 50 -c 100 http://localhost/healthz.php &
+sleep 1
+wrk -d $time -t 10 -c 100 http://localhost/livez.html &
+```
+
+You will notice, that with the right `shutdownDelay` and deployment `strategy`, you can get your installation to do
+an update without dropping a single request (100% availability while doing a rollingUpdate).
+
+While running the test suite, simply apply a small change via helm (memory limits for example) and watch the pods being
+created and gracefully terminated without missing a request.
+
+See also: https://medium.com/inside-personio/graceful-shutdown-of-fpm-and-nginx-in-kubernetes-f362369dff22
+
+## Test results
+Under load, the deployments get scaled up to 3 replicas each
+```shell
+NAME                                           CPU(cores)   MEMORY(bytes)
+loadtest-nginx-phpfpm-nginx-8677d86c6d-6srnm   192m         9Mi
+loadtest-nginx-phpfpm-nginx-8677d86c6d-b5gdr   195m         10Mi
+loadtest-nginx-phpfpm-nginx-8677d86c6d-kd7gg   216m         6Mi
+loadtest-nginx-phpfpm-phpfpm-b7c569b8c-7hl56   1265m        20Mi
+loadtest-nginx-phpfpm-phpfpm-b7c569b8c-lw9tj   921m         11Mi
+loadtest-nginx-phpfpm-phpfpm-b7c569b8c-tsnvr   792m         20Mi
+```
+Once the test is over, after about 5 minutes, the deployments get scaled down again
+```shell
+NAME                                           CPU(cores)   MEMORY(bytes)
+loadtest-nginx-phpfpm-nginx-8677d86c6d-b5gdr   1m           10Mi
+loadtest-nginx-phpfpm-phpfpm-b7c569b8c-lw9tj   1m           11Mi
+```
+
+
+
+
 ## Missing features - help appreciated
 * [ ] provide `nginx.conf` through `values.yaml` -> make it configurable
 * [ ] test scenarios and/or examples
-  * [ ] test autoscaling
+  * [x] test autoscaling
   * [ ] test persistence
 
 ## Contribute
