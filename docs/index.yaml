@@ -360,6 +360,34 @@ entries:
           url: https://hub.docker.com/_/php/tags?page=1&name=fpm
     apiVersion: v2
     appVersion: 8-fpm-alpine
+    created: "2023-03-18T15:15:19.997517053Z"
+    description: A chart for an nginx pod with multiple phpfpm pods
+    digest: 775b183c0d1938f9ca8c808b1937ac09ad001596b4c8b6ec23e2e2918e8fc9d1
+    home: https://github.com/SickHub
+    icon: https://raw.githubusercontent.com/SickHub/charts/master/sickhub/nginx-phpfpm/icon.png
+    keywords:
+    - php
+    - php-fpm
+    - nginx
+    maintainers:
+    - email: drpsychick@drsick.net
+      name: SickHub
+      url: https://github.com/SickHub
+    name: nginx-phpfpm
+    sources:
+    - https://github.com/SickHub/charts
+    type: application
+    urls:
+    - https://github.com/SickHub/charts/releases/download/nginx-phpfpm-0.1.1/nginx-phpfpm-0.1.1.tgz
+    version: 0.1.1
+  - annotations:
+      artifacthub.io/links: |
+        - name: Ngix image
+          url: https://hub.docker.com/_/nginx
+        - name: PHP FPM image
+          url: https://hub.docker.com/_/php/tags?page=1&name=fpm
+    apiVersion: v2
+    appVersion: 8-fpm-alpine
     created: "2023-03-18T00:29:21.366327382Z"
     description: A chart for an nginx pod with multiple phpfpm pods
     digest: 9f70f6e299bbc64bb7bde1abe46a34b27cd4385e1910f1c1deed5b791517856f
@@ -604,4 +632,4 @@ entries:
     urls:
     - https://sickhub.github.io/charts/nginx-phpfpm-0.0.2.tgz
     version: 0.0.2
-generated: "2023-03-18T00:29:21.366470985Z"
+generated: "2023-03-18T15:15:19.997854253Z"
