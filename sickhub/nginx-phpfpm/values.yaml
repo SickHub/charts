@@ -103,6 +103,7 @@ phpfpm:
   # these directories or files are copied to `docRoot` of nginx from the phpfpm image
   # mutually exclusive with `persistence.enabled = true`
   staticFiles: []
+  #  - "livez.html"
   #  - "*.jpg"
   #  - "assets"
 

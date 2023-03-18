@@ -29,12 +29,12 @@ data:
         # Set nginx to serve files from the shared volume!
         root {{ .Values.nginx.docRoot }};
         server_name _;
-        location /health.php {
+        location /healthz.php {
           satisfy all;
           allow 10.0.0.0/8;
           deny all;
           include fastcgi_params;
-          fastcgi_param SCRIPT_FILENAME $document_root/health.php;
+          fastcgi_param SCRIPT_FILENAME $document_root/healthz.php;
           fastcgi_pass {{ include "nginx-phpfpm.fullname" . }}-phpfpm:9000;
         }
         location / {
