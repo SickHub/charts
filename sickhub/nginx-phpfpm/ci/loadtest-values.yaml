@@ -7,7 +7,7 @@ configMaps:
     data:
       livez.html: |
         <html><body>OK</body></html>
-      health.php: |
+      healthz.php: |
         <?php phpinfo(); ?>
       load.php: |
         <?php $time=time()+rand(1, 5); for(true;time() < $time;); phpinfo(); ?>
@@ -55,6 +55,8 @@ phpfpm:
 
 ingress:
   enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
   hosts:
     - host: localhost
       paths:
