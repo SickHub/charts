@@ -35,7 +35,7 @@ ingress:
 ```
 
 ### Nginx
-* uses `/healthz.php` and `/livez.html` as an readyness and liveness probes by default (e.g. expects that to exist on the `phpfpm` image)
+* uses `/healthz.php` and `/livez.html` as an readiness and liveness probes by default (e.g. expects that to exist on the `phpfpm` image)
   * the path `/healthz.php` is only accessible from within the cluster.
 * [ ] TODO: the `nginx.conf` can be provided in the `values.yaml`
 * access can be restricted with simple basic auth through `nginx.htaccess`
