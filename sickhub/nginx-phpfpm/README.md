@@ -35,8 +35,8 @@ ingress:
 ```
 
 ### Nginx
-* uses `/health.php` as an health endpoint by default (e.g. expects that to exist on the `phpfpm` image)
-  * the path `/health.php` is only accessible from within the cluster.
+* uses `/healthz.php` and `/livez.html` as an readiness and liveness probes by default (e.g. expects that to exist on the `phpfpm` image)
+  * the path `/healthz.php` is only accessible from within the cluster.
 * [ ] TODO: the `nginx.conf` can be provided in the `values.yaml`
 * access can be restricted with simple basic auth through `nginx.htaccess`
 
@@ -48,7 +48,8 @@ You have multiple options to run your code:
 * add simple scripts to your `values.yaml` to run on a generic image
   
 Requirements:
-* image must include `/health.php` used by health check of `nginx`
+* image must include `/healthz.php` and `/livez.html` used by probes of `nginx`.
+* add `/livez.html` to `phpfpm.staticFiles` so that it is copied to the nginx docroot.
 
 #### Use your own PHP FPM image
 Create your own image including your code:
@@ -78,7 +79,9 @@ configMaps:
   scripts:
     path: /
     data:
-      health.php: |
+      livez.html: |
+        <html><body>OK</body></html>
+      healthz.php: |
         <?php phpinfo(); ?>
   configs:
     path: /etc
@@ -96,6 +99,7 @@ to copy static files from the `phpfpm` image to the document root of `nginx` to 
 ```yaml
 phpfpm:
   staticFiles:
+    - livez.html
     - *.jpg
     - assets
 ```
