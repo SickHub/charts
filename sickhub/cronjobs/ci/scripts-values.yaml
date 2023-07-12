@@ -39,5 +39,6 @@ jobs:
 
   suspended:
     schedule: "* * * * *"
+    timeZone: "Etc/UTC"
     command: ["cat", "/var/log/messages"]
     suspend: true
