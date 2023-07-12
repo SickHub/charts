@@ -56,6 +56,8 @@ env: []
 jobs: {}
 #  test:
 #    schedule: "*/5 * * * *"
+#    # see https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#time-zones
+#    timeZone: "Etc/UTC"
 #    command:
 #      - /bin/sh
 #      - -c
