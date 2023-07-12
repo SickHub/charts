@@ -31,6 +31,9 @@ spec:
   failedJobsHistoryLimit: {{ default 1 .failedJobsHistoryLimit }}
   successfulJobsHistoryLimit: {{ default 1 .successfulJobsHistoryLimit }}
   schedule: {{ .schedule | quote }}
+  {{- if and (gte .Capabilities.KubeVersion.Version "1.27.0") .timeZone }}
+    timeZone: {{ .timeZone }}
+  {{- end }}
   {{- if .suspend }}
   suspend: {{ .suspend }}
   {{- end }}
