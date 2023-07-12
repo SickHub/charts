@@ -31,7 +31,7 @@ spec:
   failedJobsHistoryLimit: {{ default 1 .failedJobsHistoryLimit }}
   successfulJobsHistoryLimit: {{ default 1 .successfulJobsHistoryLimit }}
   schedule: {{ .schedule | quote }}
-  {{- if and (ge (int .Capabilities.KubeVersion.Minor) 27) .timeZone }}
+  {{- if and .Capabilities (ge (int .Capabilities.KubeVersion.Minor) 27) .timeZone }}
     timeZone: {{ .timeZone }}
   {{- end }}
   {{- if .suspend }}
