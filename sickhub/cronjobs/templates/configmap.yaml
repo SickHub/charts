@@ -1,5 +1,6 @@
 {{- $chart_name := include "cronjobs.fullname" . }}
 {{- $chart_labels := include "cronjobs.labels" . }}
+{{- $namespace := include "cronjobs.namespace" . }}
 
 {{- if .Values.configMaps }}
 {{- range $name, $map := .Values.configMaps }}
@@ -9,6 +10,7 @@ apiVersion: "v1"
 kind: "ConfigMap"
 metadata:
   name: {{ $chart_name }}-{{ $name }}
+  namespace: {{ $namespace }}
   labels:
     {{- $chart_labels | nindent 4 }}
   annotations:

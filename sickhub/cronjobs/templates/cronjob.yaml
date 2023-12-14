@@ -3,6 +3,7 @@
 {{- $chart_labels := include "cronjobs.labels" . }}
 {{- $chart_selector_labels := include "cronjobs.selectorLabels" . }}
 {{- $service_account_name := include "cronjobs.serviceAccountName" . }}
+{{- $namespace := include "cronjobs.namespace" . }}
 {{- $registry := .Values.image.registry }}
 {{- $tag := .Values.image.tag | default .Chart.AppVersion }}
 {{- $image_pull_secrets := .Values.imagePullSecrets }}
@@ -22,6 +23,7 @@ apiVersion: {{ $api_version }}
 kind: CronJob
 metadata:
   name: {{ $chart_name }}-{{ $name }}
+  namespace: {{ $namespace }}
   labels:
     {{- $chart_labels | nindent 4 }}
   annotations:
