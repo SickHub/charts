@@ -1,5 +1,6 @@
 nameOverride: ""
 fullnameOverride: ""
+namespaceOverride: ""
 
 image:
   registry: docker.io

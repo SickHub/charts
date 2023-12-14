@@ -60,3 +60,10 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Namespace to be released into
+*/}}
+{{- define "cronjobs.namespace" -}}
+{{- default .Release.Namespace .Values.namespaceOverride }}
+{{- end }}
