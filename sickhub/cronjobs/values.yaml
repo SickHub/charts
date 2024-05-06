@@ -85,6 +85,34 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+role:
+  # Specifies whether a role is created that is bound to the service account
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the role
+  name: ""
+  # The k8s rbac rules to attach to the role.
+  # This value must be set if a role should be created.
+  rules:
+  # - apiGroups: ["", "extensions", "apps"]
+  #   resources: ["deployments", "replicasets", "pods", "pods/attach", "pods/exec", "pods/log"]
+  #   verbs: ["list", "get", "watch", "create", "update", "patch", "delete"]
+
+clusterrole:
+  # Specifies whether a cluster role is created that is bound to the service account
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the cluster role
+  name: ""
+  # The k8s rbac rules to attach to the cluster role
+  # This value must be set if a cluster role should be created.
+  rules:
+  # - apiGroups: ["", "extensions", "apps"]
+  #   resources: ["deployments", "replicasets", "pods", "pods/attach", "pods/exec", "pods/log"]
+  #   verbs: ["list", "get", "watch", "create", "update", "patch", "delete"]
+
 podAnnotations: {}
 
 podSecurityContext: {}

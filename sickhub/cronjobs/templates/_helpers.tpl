@@ -62,6 +62,50 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create the name of the role to use
+*/}}
+{{- define "cronjobs.roleName" -}}
+{{- if .Values.role.create }}
+{{- default (include "cronjobs.fullname" .) .Values.role.name }}
+{{- else }}
+{{- default "default" .Values.role.name }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the rolebinding to use - defaults to the role name
+*/}}
+{{- define "cronjobs.roleBindingName" -}}
+{{- if .Values.role.create }}
+{{- default (include "cronjobs.fullname" .) .Values.role.name }}
+{{- else }}
+{{- default "default" .Values.role.name }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the cluster role to use
+*/}}
+{{- define "cronjobs.clusterroleName" -}}
+{{- if .Values.clusterrole.create }}
+{{- default (include "cronjobs.fullname" .) .Values.clusterrole.name }}
+{{- else }}
+{{- default "default" .Values.clusterrole.name }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the cluster rolebinding to use - defaults to the cluster role name
+*/}}
+{{- define "cronjobs.clusterroleBindingName" -}}
+{{- if .Values.clusterrole.create }}
+{{- default (include "cronjobs.fullname" .) .Values.clusterrole.name }}
+{{- else }}
+{{- default "default" .Values.clusterrole.name }}
+{{- end }}
+{{- end }}
+
+{{/*
 Namespace to be released into
 */}}
 {{- define "cronjobs.namespace" -}}
