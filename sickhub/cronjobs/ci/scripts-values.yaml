@@ -24,6 +24,11 @@ configMaps:
     files:
       example.sh: ci/files/example.sh
 
+podAnnotations:
+  testAnnotation: value
+potLabels:
+  testLabel: value
+
 jobs:
   start:
     schedule: "* * * * *"
