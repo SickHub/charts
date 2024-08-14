@@ -9,6 +9,36 @@ entries:
           url: https://hub.docker.com/_/busybox
     apiVersion: v2
     appVersion: latest
+    created: "2024-08-14T07:49:44.742422274Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      version: 2.21.0
+    description: A generic helm cronjob chart for kubernetes
+    digest: 7df4519151aa76819ceab47b63f1fc1016e73ac67a3b5a61ee3229e89ec7573b
+    home: https://github.com/SickHub
+    icon: https://raw.githubusercontent.com/SickHub/charts/master/sickhub/cronjobs/icon.png
+    keywords:
+    - cronjob
+    maintainers:
+    - email: drpsychick@drsick.net
+      name: SickHub
+      url: https://github.com/SickHub
+    name: cronjobs
+    sources:
+    - https://github.com/SickHub/charts
+    type: application
+    urls:
+    - https://github.com/SickHub/charts/releases/download/cronjobs-0.4.0/cronjobs-0.4.0.tgz
+    version: 0.4.0
+  - annotations:
+      artifacthub.io/links: |
+        - name: Image source
+          url: https://github.com/docker-library/busybox
+        - name: Image DockerHub
+          url: https://hub.docker.com/_/busybox
+    apiVersion: v2
+    appVersion: latest
     created: "2024-05-06T18:20:57.129824938Z"
     dependencies:
     - name: common
@@ -692,4 +722,4 @@ entries:
     urls:
     - https://sickhub.github.io/charts/nginx-phpfpm-0.0.2.tgz
     version: 0.0.2
-generated: "2024-05-06T18:20:57.129974828Z"
+generated: "2024-08-14T07:49:44.742556135Z"
