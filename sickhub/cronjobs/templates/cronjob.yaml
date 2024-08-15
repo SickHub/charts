@@ -62,12 +62,12 @@ spec:
       {{- end}}
       template:
         metadata:
-          {{- with .podAnnotations }}
+          {{- with $.Values.podAnnotations }}
           annotations:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           labels:
-            {{- with .podLabels }}
+            {{- with $.Values.podLabels }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
             {{- $chart_selector_labels | nindent 12 }}
