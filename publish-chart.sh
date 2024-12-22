@@ -19,7 +19,7 @@ git rebase master
 git push
 
 echo "--> Helm package and re-index"
-for c in cronjobs nginx-phpfpm; do
+for c in cronjobs nginx-phpfpm mtr-exporter; do
   [ -z "$(git status -s ./sickhub/$c/Chart.yaml)" -a -z "$UPDATE" ] && bumpChartVersion $c
   (cd sickhub; helm dependency update $c; helm package $c)
   mv ./sickhub/$c-*.tgz ./docs/
