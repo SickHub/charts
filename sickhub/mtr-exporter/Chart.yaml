@@ -4,9 +4,8 @@ description: A Helm chart for an mtr-exporter pod providing metrics.
 type: application
 version: 0.0.1
 # https://github.com/mgumz/mtr-exporter
-# https://hub.docker.com/r/dragoonaethis/mtr-exporter
-# TODO: create new regularly updated image
-appVersion: "0.3.0"
+# https://github.com/mgumz/mtr-exporter/pkgs/container/mtr-exporter
+appVersion: "0.4.0"
 home: https://github.com/SickHub
 keywords:
   - mtr
@@ -20,4 +19,4 @@ maintainers:
 annotations:
   artifacthub.io/links: |
     - name: mtr-exporter image
-      url: https://hub.docker.com/r/dragoonaethis/mtr-exporter
+      url: https://github.com/mgumz/mtr-exporter/pkgs/container/mtr-exporter
