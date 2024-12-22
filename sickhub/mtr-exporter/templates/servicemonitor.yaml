@@ -1,0 +1,31 @@
+{{- if .Values.serviceMonitor.enabled }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "mtr-exporter.fullname" . }}
+  labels:
+    {{- include "mtr-exporter.labels" . | nindent 4 }}
+    {{- if .Values.serviceMonitor.defaults.labels }}
+    {{- toYaml .Values.serviceMonitor.defaults.labels | nindent 4 }}
+    {{- end }}
+spec:
+  endpoints:
+  - port: http
+    path: {{ .Values.serviceMonitor.path }}
+    interval: {{ .Values.serviceMonitor.defaults.interval }}
+    scrapeTimeout: {{ .Values.serviceMonitor.defaults.scrapeTimeout }}
+    honorTimestamps: {{ .Values.serviceMonitor.defaults.honorTimestamps }}
+    {{- if .Values.serviceMonitor.defaults.metricRelabelings }}
+    metricRelabelings:
+    {{ toYaml .Values.serviceMonitor.defaults.metricRelabelings | indent 6 }}
+    {{- end }}
+    {{- if .Values.serviceMonitor.defaults.additionalRelabelings }}
+    relabelings:
+    {{ toYaml .Values.serviceMonitor.defaults.additionalRelabelings | indent 6 }}
+    {{- end }}
+  jobLabel: "{{ .Release.Name }}"
+  selector:
+    matchLabels:
+      {{- include "mtr-exporter.labels" . | nindent 6 }}
+{{- end }}

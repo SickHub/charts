@@ -26,6 +26,22 @@ exporterJobs: []
 #    schedule: "@every 120s"
 #    mtrFlags: "-G 1 example.com"
 
+serviceMonitor:
+  enabled: false
+  path: /metrics
+  defaults:
+    interval: 60s
+    scrapeTimeout: 3s
+    honorTimestamps: true
+    metricRelabelings: {}
+      # - sourceLabels: [instance]
+      #   targetLabel: instance
+      #   replacement: {{ .url }}
+      #   action: replace
+    additionalRelabelings: {}
+    labels: {}
+      # prometheus: default
+
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
   # Specifies whether a service account should be created
