@@ -1,0 +1,12 @@
+exporterJobs:
+  - label: "mtr-example.com"
+    mtrFlags: "-z -G 1 example.com"
+  - label: "mtr-quad8"
+    schedule: "@every 10s"
+    mtrFlags: "-z -G 1 -n 8.8.8.8"
+volumeMounts:
+  - mountPath: /test
+    name: test
+volumes:
+  - name: test
+    emptyDir: {}
