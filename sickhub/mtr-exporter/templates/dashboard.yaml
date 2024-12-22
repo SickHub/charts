@@ -4,11 +4,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   labels:
-    app: mtr-exporter
     grafana_dashboard: "1"
+    {{- include "mtr-exporter.labels" . | nindent 4 }}
   annotations:
     grafana_folder: "{{ .Values.grafanaDashboards.folder }}"
-  name: mtr-exporter-dashboard
+  name: {{ include "mtr-exporter.fullname" . }}-dashboard
 data:
   mtr-exporter-dashboard.json: |-
     {{- .Files.Get "files/mtr-exporter.json" | nindent 4 }}
