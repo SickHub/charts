@@ -42,6 +42,11 @@ serviceMonitor:
     labels: {}
       # prometheus: default
 
+# Enable grafana dashboard as a ConfigMap. This currently depends on `sort_by_label_numeric` of VictoriaMetrics.
+grafanaDashboards:
+  enabled: false
+  folder: "network"
+
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
   # Specifies whether a service account should be created

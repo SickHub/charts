@@ -1,0 +1,15 @@
+{{- if .Values.grafanaDashboards.enabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: mtr-exporter
+    grafana_dashboard: "1"
+  annotations:
+    grafana_folder: "{{ .Values.grafanaDashboards.folder }}"
+  name: mtr-exporter-dashboard
+data:
+  mtr-exporter-dashboard.json: |-
+    {{- .Files.Get "files/mtr-exporter.json" | nindent 4 }}
+{{- end}}

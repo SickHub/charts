@@ -10,3 +10,5 @@ volumeMounts:
 volumes:
   - name: test
     emptyDir: {}
+grafanaDashboards:
+  enabled: true
