@@ -27,3 +27,5 @@ helm template test . -f ci/test-values.yaml
 helm upgrade -i mtr-exporter . -f ci/test-values.yaml
 ```
 
+## Credits
+* Icon from [Smashicons](https://www.flaticon.com/authors/smashicons) found on [FlatIcon](https://www.flaticon.com/)
