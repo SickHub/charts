@@ -12,7 +12,7 @@
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/sickhub/charts.svg)](https://github.com/sickhub/charts/pulls)
 [![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/sickhub/charts.svg)](https://github.com/sickhub/charts/pulls?q=is%3Apr+is%3Aclosed)
 
-## Generic charts, like `cronjobs`, `nginx-phpfpm`
+## Generic charts, like `cronjobs`, `nginx-phpfpm`, `mtr-exporter`
 * requires helm v3
 
 ```shell script

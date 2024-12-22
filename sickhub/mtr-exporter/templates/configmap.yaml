@@ -1,0 +1,16 @@
+{{- $checksum := toYaml .Values.exporterJobs | sha256sum | trunc 20 | quote }}
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: {{ include "mtr-exporter.fullname" . }}
+  labels:
+    {{- include "mtr-exporter.labels" . | nindent 4 }}
+  annotations:
+    values/checksum: {{ $checksum }}
+data:
+  mtr-exporter.jobs: |-
+    # do not modify, generated from values.yaml by helm chart
+    {{- range .Values.exporterJobs }}
+    {{ .label }} -- {{ default "@every 60s" .schedule }} -- {{ .mtrFlags }}
+    {{- end }}

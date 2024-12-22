@@ -1,0 +1,23 @@
+apiVersion: v2
+name: mtr-exporter
+description: A Helm chart for an mtr-exporter pod providing metrics.
+type: application
+version: 0.0.1
+# https://github.com/mgumz/mtr-exporter
+# https://github.com/mgumz/mtr-exporter/pkgs/container/mtr-exporter
+appVersion: "0.4.0"
+home: https://github.com/SickHub
+icon: https://raw.githubusercontent.com/SickHub/charts/master/sickhub/mtr-exporter/icon.png
+keywords:
+  - mtr
+  - exporter
+sources:
+  - https://github.com/SickHub/charts
+maintainers:
+  - name: SickHub
+    email: drpsychick@drsick.net
+    url: https://github.com/SickHub
+annotations:
+  artifacthub.io/links: |
+    - name: mtr-exporter image
+      url: https://github.com/mgumz/mtr-exporter/pkgs/container/mtr-exporter

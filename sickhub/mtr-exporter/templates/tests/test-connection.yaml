@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "mtr-exporter.fullname" . }}-test-connection"
+  labels:
+    {{- include "mtr-exporter.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "mtr-exporter.fullname" . }}:{{ .Values.service.port }}/metrics']
+  restartPolicy: Never
