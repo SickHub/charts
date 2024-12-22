@@ -478,6 +478,31 @@ entries:
           url: https://github.com/mgumz/mtr-exporter/pkgs/container/mtr-exporter
     apiVersion: v2
     appVersion: 0.4.0
+    created: "2024-12-22T22:24:13.562891676Z"
+    description: A Helm chart for an mtr-exporter pod providing metrics.
+    digest: ecdcd47720ae0842108cd799bee578e34a3d07a026435c81f1ecac399ad63cb8
+    home: https://github.com/SickHub
+    icon: https://raw.githubusercontent.com/SickHub/charts/master/sickhub/mtr-exporter/icon.png
+    keywords:
+    - mtr
+    - exporter
+    maintainers:
+    - email: drpsychick@drsick.net
+      name: SickHub
+      url: https://github.com/SickHub
+    name: mtr-exporter
+    sources:
+    - https://github.com/SickHub/charts
+    type: application
+    urls:
+    - https://github.com/SickHub/charts/releases/download/mtr-exporter-0.0.2/mtr-exporter-0.0.2.tgz
+    version: 0.0.2
+  - annotations:
+      artifacthub.io/links: |
+        - name: mtr-exporter image
+          url: https://github.com/mgumz/mtr-exporter/pkgs/container/mtr-exporter
+    apiVersion: v2
+    appVersion: 0.4.0
     created: "2024-12-22T21:32:35.726219003Z"
     description: A Helm chart for an mtr-exporter pod providing metrics.
     digest: 8e5612e066647d5782d65bee7a860ebeccb2626f66cbff6084bba21008f844d8
@@ -778,4 +803,4 @@ entries:
     urls:
     - https://sickhub.github.io/charts/nginx-phpfpm-0.0.2.tgz
     version: 0.0.2
-generated: "2024-12-22T21:32:35.726320694Z"
+generated: "2024-12-22T22:24:13.56296303Z"
