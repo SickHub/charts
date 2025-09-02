@@ -20,7 +20,4 @@ annotations:
       url: https://github.com/docker-library/busybox
     - name: Image DockerHub
       url: https://hub.docker.com/_/busybox
-dependencies:
-  - name: common
-    version: 2.31.4
-    repository: https://charts.bitnami.com/bitnami
+dependencies: []
